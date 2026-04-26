@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/hikes", "destination": "/api/hikes" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

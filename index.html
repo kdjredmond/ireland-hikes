@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trailfinder Ireland</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    body {
+      min-height: 100vh;
+      background: #0b1810;
+      color: #e4d9c8;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 100% 60% at 10% 0%, rgba(56,115,70,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 70% at 90% 100%, rgba(20,65,35,0.2) 0%, transparent 60%);
+    }
+
+    .wrap {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto; padding: 0 1.25rem 4rem;
+    }
+
+    /* Header */
+    .hdr { text-align: center; padding: 3rem 0 2.5rem; }
+    .hdr h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 7vw, 4rem);
+      font-weight: 600; line-height: 1; color: #e4d9c8;
+    }
+    .hdr h1 em { color: #6db87a; font-style: italic; }
+    .hdr p { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: #4e8056; margin-top: 0.55rem; }
+    .hdr-rule { width: 56px; height: 1px; background: linear-gradient(to right, transparent, #3a6040, transparent); margin: 1.1rem auto 0; }
+
+    /* Location button */
+    #loc-btn {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.65rem 1.3rem; border-radius: 100px;
+      border: 1px solid rgba(109,184,122,0.4);
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; font-weight: 500; color: #6db87a;
+      background: none; transition: all 0.2s;
+      margin: 0 auto 2rem; width: fit-content;
+    }
+    #loc-btn.ok   { border-color: #6db87a; color: #8dd49a; background: rgba(109,184,122,0.1); }
+    #loc-btn.deny { border-color: rgba(220,100,80,0.4); color: #e08878; }
+
+    /* Section label */
+    .sec-lbl {
+      font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #4e8056; margin-bottom: 0.9rem; font-weight: 600;
+    }
+
+    .mb175 { margin-bottom: 1.75rem; }
+    .mb1   { margin-bottom: 1rem; }
+
+    /* Grid */
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
+
+    /* Slider cards */
+    .scard {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 13px; padding: 1.1rem 1.25rem;
+    }
+    .scard-lbl { font-size: 0.78rem; color: #6a9070; margin-bottom: 0.15rem; }
+    .scard-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 600; color: #e4d9c8;
+      margin-bottom: 0.55rem; line-height: 1;
+    }
+    .scard-val small { font-size: 0.82rem; color: #6a9070; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+
+    input[type=range] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 3px; border-radius: 2px;
+      background: rgba(109,184,122,0.2); outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 16px; height: 16px;
+      border-radius: 50%; background: #6db87a; cursor: pointer;
+      box-shadow: 0 0 0 4px rgba(109,184,122,0.18);
+    }
+
+    /* Selects */
+    select {
+      width: 100%; padding: 0.72rem 2.2rem 0.72rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; color: #e4d9c8;
+      font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
+      cursor: pointer; outline: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234e8056'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center;
+    }
+    select option { background: #182e1e; }
+    .sel-wrap label { font-size: 0.78rem; color: #6a9070; display: block; margin-bottom: 0.45rem; }
+
+    /* Facility toggles */
+    .toggle {
+      display: flex; flex-direction: column; align-items: center; gap: 0.45rem;
+      padding: 1rem 0.5rem; border-radius: 12px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      transition: all 0.2s; text-align: center; user-select: none;
+    }
+    .toggle.on { background: rgba(109,184,122,0.1); border-color: rgba(109,184,122,0.38); }
+    .toggle-ico { font-size: 1.5rem; }
+    .toggle-lbl { font-size: 0.7rem; color: #6a9070; }
+    .toggle.on .toggle-lbl { color: #8dd49a; }
+
+    /* Search button */
+    #search-btn {
+      width: 100%; padding: 1rem; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, #3d7a4a, #2b5e38);
+      color: #e4d9c8; font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      margin-top: 0.5rem; letter-spacing: 0.02em; transition: all 0.2s;
+    }
+    #search-btn:hover { background: linear-gradient(135deg, #4a8a58, #336e44); }
+
+    /* Loading */
+    #loading { display: none; text-align: center; padding: 5rem 1rem; }
+    .spinner {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 2px solid rgba(109,184,122,0.12);
+      border-top-color: #6db87a;
+      animation: spin 0.9s line

@@ -114,6 +114,17 @@
     .s-poor { background: rgba(220,80,60,0.14);   color: #e07060; }
     .weather-note { font-size: 0.74rem; color: #4a6e52; margin-top: 0.45rem; }
     .why { font-size: 0.76rem; color: #4e8056; font-style: italic; margin-top: 0.5rem; }
+    .hcard-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
+    .hlink {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.75rem;
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      text-decoration: none; transition: all 0.2s; cursor: pointer;
+    }
+    .hlink-map  { background: rgba(66,133,244,0.12); color: #7ab3f5; border: 1px solid rgba(66,133,244,0.25); }
+    .hlink-map:hover  { background: rgba(66,133,244,0.22); }
+    .hlink-web  { background: rgba(109,184,122,0.1); color: #7dd492; border: 1px solid rgba(109,184,122,0.25); }
+    .hlink-web:hover  { background: rgba(109,184,122,0.2); }
     .err { background: rgba(220,80,60,0.09); border: 1px solid rgba(220,80,60,0.2); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.83rem; color: #e08070; margin-bottom: 1rem; display: none; }
     @media (max-width: 480px) {
       .g2 { grid-template-columns: 1fr; }
@@ -273,7 +284,7 @@
       const facList=[tog.carPark&&'car park',tog.toilet&&'public toilet',tog.food&&'food nearby'].filter(Boolean);
       const elevLabel=elevation==='low'?'Low under 300m':elevation==='medium'?'Medium 300-600m':elevation==='high'?'High 600m+':'No preference';
       const today=new Date().toLocaleDateString('en-IE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-      const prompt=`Find me 3 hiking trail recommendations in Ireland.\nMy location: ${locStr}\nMax travel: ${travelKm} km\nHike duration: ${minDurHrs}-${maxDurHrs} hours\nHike distance: ${minDistKm}-${maxDistKm} km\nElevation: ${elevLabel}\nDifficulty: ${difficulty==='any'?'No preference':difficulty}\nRequired facilities: ${facList.length?facList.join(', '):'none'}\nToday: ${today}\n\nSearch for current weather near my location first, then find 3 specific real trails.\nReturn ONLY valid JSON no markdown no backticks:\n{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string"},"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string","highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},"approx_distance_from_user_km":0,"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}`;
+      const prompt=`Find me 3 hiking trail recommendations in Ireland.\nMy location: ${locStr}\nMax travel: ${travelKm} km\nHike duration: ${minDurHrs}-${maxDurHrs} hours\nHike distance: ${minDistKm}-${maxDistKm} km\nElevation: ${elevLabel}\nDifficulty: ${difficulty==='any'?'No preference':difficulty}\nRequired facilities: ${facList.length?facList.join(', '):'none'}\nToday: ${today}\n\nSearch for current weather near my location first, then find 3 specific real trails.\nReturn ONLY valid JSON no markdown no backticks:\n{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string"},"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string","highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string","weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}`;
       showView('loading');
       try{
         const res=await fetch('/api/hikes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,tools:[{type:'web_search_20250305',name:'web_search'}],system:'You are an expert Irish hiking guide. Always check live weather first. Only recommend real existing trails. Respond ONLY with valid JSON no markdown no backticks no preamble.',messages:[{role:'user',content:prompt}]})});
@@ -294,7 +305,12 @@
         const dist=h.approx_distance_from_user_km>0?`<span class="stat">🚗 ~${h.approx_distance_from_user_km} km away</span>`:'';
         const facs=[h.facilities?.car_park?'<span class="fac">🅿️ Car park</span>':'',h.facilities?.toilet?'<span class="fac">🚻 Toilets</span>':'',h.facilities?.nearby_food?`<span class="fac">🍺 ${h.facilities.food_note||'Food nearby'}</span>`:''].join('')||'<span class="fac" style="color:#3a5c40">No listed facilities</span>';
         const hls=(h.highlights||[]).map(hl=>`<li>${hl}</li>`).join('');
-        html+=`<div class="hcard"><div class="hcard-head"><div><h2 class="hcard-name">${h.name}</h2><p class="hcard-loc">📍 ${h.nearby_town}, Co. ${h.county}</p></div><span class="badge ${diffClass(h.difficulty)}">${h.difficulty}</span></div><div class="stats"><span class="stat">⏱ <strong>${fmtDur(h.duration_hours)}</strong></span><span class="stat">📏 <strong>${h.distance_km} km</strong></span><span class="stat">⛰ <strong>${h.elevation_gain_m} m</strong> gain</span><span class="stat">🔄 ${h.trail_type}</span>${dist}</div><p class="desc">${h.description}</p>${hls?`<ul class="highlights">${hls}</ul>`:''}<div class="hcard-foot"><div class="facilities">${facs}</div><span class="suit ${suitClass(h.weather_suitability)}">${h.weather_suitability} today</span></div>${h.weather_note?`<p class="weather-note">☁️ ${h.weather_note}</p>`:''}${h.why_recommended?`<p class="why">✓ ${h.why_recommended}</p>`:''}</div>`;
+        const mapsUrl=h.lat&&h.lng?`https://www.google.com/maps/search/?api=1&query=${h.lat},${h.lng}`:`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name+' trail '+h.county+' Ireland')}`;
+        const linksHtml=`<div class="hcard-links">
+          <a class="hlink hlink-map" href="${mapsUrl}" target="_blank" rel="noopener">🗺 Open in Google Maps</a>
+          ${h.official_website?`<a class="hlink hlink-web" href="${h.official_website}" target="_blank" rel="noopener">🔗 Official website</a>`:''}
+        </div>`;
+        html+=`<div class="hcard"><div class="hcard-head"><div><h2 class="hcard-name">${h.name}</h2><p class="hcard-loc">📍 ${h.nearby_town}, Co. ${h.county}</p></div><span class="badge ${diffClass(h.difficulty)}">${h.difficulty}</span></div><div class="stats"><span class="stat">⏱ <strong>${fmtDur(h.duration_hours)}</strong></span><span class="stat">📏 <strong>${h.distance_km} km</strong></span><span class="stat">⛰ <strong>${h.elevation_gain_m} m</strong> gain</span><span class="stat">🔄 ${h.trail_type}</span>${dist}</div><p class="desc">${h.description}</p>${hls?`<ul class="highlights">${hls}</ul>`:''}<div class="hcard-foot"><div class="facilities">${facs}</div><span class="suit ${suitClass(h.weather_suitability)}">${h.weather_suitability} today</span></div>${h.weather_note?`<p class="weather-note">☁️ ${h.weather_note}</p>`:''}${h.why_recommended?`<p class="why">✓ ${h.why_recommended}</p>`:''}${linksHtml}</div>`;
       });
       document.getElementById('results-inner').innerHTML=html;
     }

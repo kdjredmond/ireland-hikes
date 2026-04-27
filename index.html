@@ -518,7 +518,7 @@ Return ONLY valid JSON — no markdown, no backticks, no explanation:
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
+            model: 'claude-sonnet-4-6',
             max_tokens: 4000,
             tools: [{ type: 'web_search_20250305', name: 'web_search' }],
             system: 'You are an expert Irish hiking guide with encyclopedic knowledge of trails across all 32 counties. Always check live weather before recommending hikes. Only recommend real, existing trails. Respond ONLY with valid JSON — no markdown, no backticks, no preamble.',

@@ -53,6 +53,23 @@
     .mb1   { margin-bottom: 1rem; }
     .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
+    .g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.6rem; }
+    .busy-bar { margin-top: 0.85rem; padding: 0.75rem 1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; }
+    .busy-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; }
+    .busy-lbl { font-size: 0.72rem; color: #6a9070; }
+    .busy-val { font-size: 0.72rem; font-weight: 600; }
+    .busy-quiet  { color: #7dd492; }
+    .busy-mod    { color: #d4b86a; }
+    .busy-busy   { color: #e09060; }
+    .busy-vbusy  { color: #e07060; }
+    .busy-dots { display: flex; gap: 4px; margin-top: 0.3rem; }
+    .busy-dot { width: 28px; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.08); }
+    .busy-dot.on-quiet { background: #7dd492; }
+    .busy-dot.on-mod   { background: #d4b86a; }
+    .busy-dot.on-busy  { background: #e09060; }
+    .busy-dot.on-vbusy { background: #e07060; }
+    .busy-note { font-size: 0.72rem; color: #4e8056; margin-top: 0.4rem; font-style: italic; }
+    .child-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 100px; background: rgba(255,200,100,0.12); color: #f0c060; margin-left: 0.4rem; }
     .scard { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 13px; padding: 1.1rem 1.25rem; }
     .scard-lbl { font-size: 0.78rem; color: #6a9070; margin-bottom: 0.15rem; }
     .scard-val { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: #e4d9c8; margin-bottom: 0.55rem; line-height: 1; }
@@ -128,6 +145,7 @@
     .err { background: rgba(220,80,60,0.09); border: 1px solid rgba(220,80,60,0.2); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.83rem; color: #e08070; margin-bottom: 1rem; display: none; }
     @media (max-width: 480px) {
       .g2 { grid-template-columns: 1fr; }
+      .g4 { grid-template-columns: 1fr 1fr; }
       .weather { flex-direction: column; gap: 0.6rem; }
     }
   </style>
@@ -208,10 +226,11 @@
       </div>
       <div class="mb175">
         <p class="sec-lbl">Facilities needed</p>
-        <div class="g3">
+        <div class="g4">
           <div class="toggle" id="tog-carPark"><span class="toggle-ico">🅿️</span><span class="toggle-lbl">Car Park</span></div>
           <div class="toggle" id="tog-toilet"><span class="toggle-ico">🚻</span><span class="toggle-lbl">Toilets</span></div>
           <div class="toggle" id="tog-food"><span class="toggle-ico">🍺</span><span class="toggle-lbl">Food nearby</span></div>
+          <div class="toggle" id="tog-child"><span class="toggle-ico">👶</span><span class="toggle-lbl">Child Friendly</span></div>
         </div>
       </div>
       <button id="search-btn">Find my perfect hike →</button>
@@ -233,11 +252,11 @@
   </div>
   <script>
     let userLat=null,userLng=null;
-    const tog={carPark:false,toilet:false,food:false};
+    const tog={carPark:false,toilet:false,food:false,child:false};
     [['travelKm','travelVal'],['minDurHrs','minDurVal'],['maxDurHrs','maxDurVal'],['minDistKm','minDistVal'],['maxDistKm','maxDistVal']].forEach(([id,valId])=>{
       document.getElementById(id).addEventListener('input',function(){document.getElementById(valId).textContent=this.value;});
     });
-    ['carPark','toilet','food'].forEach(k=>{
+    ['carPark','toilet','food','child'].forEach(k=>{
       document.getElementById('tog-'+k).addEventListener('click',()=>{tog[k]=!tog[k];document.getElementById('tog-'+k).classList.toggle('on',tog[k]);});
     });
     const locBtn=document.getElementById('loc-btn');
@@ -281,10 +300,10 @@
       const difficulty=document.getElementById('difficulty').value;
       const elevation=document.getElementById('elevation').value;
       const locStr=userLat?`latitude ${userLat.toFixed(5)}, longitude ${userLng.toFixed(5)}, Ireland`:'Ireland (no specific location)';
-      const facList=[tog.carPark&&'car park',tog.toilet&&'public toilet',tog.food&&'food nearby'].filter(Boolean);
+      const facList=[tog.carPark&&'car park',tog.toilet&&'public toilet',tog.food&&'food nearby',tog.child&&'child friendly (suitable for young children, safe paths, manageable distance)'].filter(Boolean);
       const elevLabel=elevation==='low'?'Low under 300m':elevation==='medium'?'Medium 300-600m':elevation==='high'?'High 600m+':'No preference';
       const today=new Date().toLocaleDateString('en-IE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-      const prompt=`Find me 3 hiking trail recommendations in Ireland.\nMy location: ${locStr}\nMax travel: ${travelKm} km\nHike duration: ${minDurHrs}-${maxDurHrs} hours\nHike distance: ${minDistKm}-${maxDistKm} km\nElevation: ${elevLabel}\nDifficulty: ${difficulty==='any'?'No preference':difficulty}\nRequired facilities: ${facList.length?facList.join(', '):'none'}\nToday: ${today}\n\nSearch for current weather near my location first, then find 3 specific real trails.\nReturn ONLY valid JSON no markdown no backticks:\n{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string"},"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string","highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string","weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}`;
+      const prompt=`Find me 3 hiking trail recommendations in Ireland.\nMy location: ${locStr}\nMax travel: ${travelKm} km\nHike duration: ${minDurHrs}-${maxDurHrs} hours\nHike distance: ${minDistKm}-${maxDistKm} km\nElevation: ${elevLabel}\nDifficulty: ${difficulty==='any'?'No preference':difficulty}\nRequired facilities: ${facList.length?facList.join(', '):'none'}\nToday: ${today}\n\nSearch for current weather near my location first, then find 3 specific real trails.\nReturn ONLY valid JSON no markdown no backticks:\n{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string"},"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string","highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string","child_friendly":false,"child_friendly_notes":"brief note on why suitable or not for children","busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"one sentence — why busy or quiet today based on day of week season and weather","best_time_to_visit":"string e.g. Early morning weekdays"},"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}`;
       showView('loading');
       try{
         const res=await fetch('/api/hikes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,tools:[{type:'web_search_20250305',name:'web_search'}],system:'You are an expert Irish hiking guide. Always check live weather first. Only recommend real existing trails. Respond ONLY with valid JSON no markdown no backticks no preamble.',messages:[{role:'user',content:prompt}]})});
@@ -310,7 +329,24 @@
           <a class="hlink hlink-map" href="${mapsUrl}" target="_blank" rel="noopener">🗺 Open in Google Maps</a>
           ${h.official_website?`<a class="hlink hlink-web" href="${h.official_website}" target="_blank" rel="noopener">🔗 Official website</a>`:''}
         </div>`;
-        html+=`<div class="hcard"><div class="hcard-head"><div><h2 class="hcard-name">${h.name}</h2><p class="hcard-loc">📍 ${h.nearby_town}, Co. ${h.county}</p></div><span class="badge ${diffClass(h.difficulty)}">${h.difficulty}</span></div><div class="stats"><span class="stat">⏱ <strong>${fmtDur(h.duration_hours)}</strong></span><span class="stat">📏 <strong>${h.distance_km} km</strong></span><span class="stat">⛰ <strong>${h.elevation_gain_m} m</strong> gain</span><span class="stat">🔄 ${h.trail_type}</span>${dist}</div><p class="desc">${h.description}</p>${hls?`<ul class="highlights">${hls}</ul>`:''}<div class="hcard-foot"><div class="facilities">${facs}</div><span class="suit ${suitClass(h.weather_suitability)}">${h.weather_suitability} today</span></div>${h.weather_note?`<p class="weather-note">☁️ ${h.weather_note}</p>`:''}${h.why_recommended?`<p class="why">✓ ${h.why_recommended}</p>`:''}${linksHtml}</div>`;
+        const childBadge=h.child_friendly?`<span class="child-badge">👶 Child Friendly</span>`:'';
+        function busyClass(level){return{Quiet:'quiet',Moderate:'mod',Busy:'busy','Very Busy':'vbusy'}[level]||'mod';}
+        const b=h.busyness||{};
+        const bGeneral=b.general_level||'Moderate';
+        const bToday=b.today_prediction||'Moderate';
+        const bClass=busyClass(bToday);
+        const dotCount={Quiet:1,Moderate:2,Busy:3,'Very Busy':4}[bToday]||2;
+        const dots=[1,2,3,4].map(i=>`<div class="busy-dot${i<=dotCount?' on-'+bClass:''}"></div>`).join('');
+        const busyHtml=`<div class="busy-bar">
+          <div class="busy-row">
+            <span class="busy-lbl">🕐 Trail busyness today</span>
+            <span class="busy-val busy-${bClass}">${bToday}</span>
+          </div>
+          <div class="busy-dots">${dots}</div>
+          ${b.today_note?`<p class="busy-note">${b.today_note}</p>`:''}
+          ${b.best_time_to_visit?`<p class="busy-note">💡 Best time: ${b.best_time_to_visit}</p>`:''}
+        </div>`;
+        html+=`<div class="hcard"><div class="hcard-head"><div><h2 class="hcard-name">${h.name}${childBadge}</h2><p class="hcard-loc">📍 ${h.nearby_town}, Co. ${h.county}</p></div><span class="badge ${diffClass(h.difficulty)}">${h.difficulty}</span></div><div class="stats"><span class="stat">⏱ <strong>${fmtDur(h.duration_hours)}</strong></span><span class="stat">📏 <strong>${h.distance_km} km</strong></span><span class="stat">⛰ <strong>${h.elevation_gain_m} m</strong> gain</span><span class="stat">🔄 ${h.trail_type}</span>${dist}</div><p class="desc">${h.description}</p>${hls?`<ul class="highlights">${hls}</ul>`:''}<div class="hcard-foot"><div class="facilities">${facs}</div><span class="suit ${suitClass(h.weather_suitability)}">${h.weather_suitability} today</span></div>${h.weather_note?`<p class="weather-note">☁️ ${h.weather_note}</p>`:''}${h.why_recommended?`<p class="why">✓ ${h.why_recommended}</p>`:''}${busyHtml}${linksHtml}</div>`;
       });
       document.getElementById('results-inner').innerHTML=html;
     }

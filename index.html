@@ -14,159 +14,108 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { background: #0b1810 !important; min-height: 100%; }
-    body {
-      min-height: 100vh;
-      background: #0b1810 !important;
-      color: #e4d9c8 !important;
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
-    }
-    @media (prefers-color-scheme: light) {
-      html, body { background: #0b1810 !important; color: #e4d9c8 !important; }
-    }
-    .bg-glow {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background:
-        radial-gradient(ellipse 100% 60% at 10% 0%, rgba(56,115,70,0.25) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 70% at 90% 100%, rgba(20,65,35,0.25) 0%, transparent 60%);
-    }
-    .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 1.25rem 4rem; }
+    body { min-height: 100vh; background: #0b1810 !important; color: #e4d9c8 !important; font-family: 'DM Sans', sans-serif; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+    @media (prefers-color-scheme: light) { html, body { background: #0b1810 !important; color: #e4d9c8 !important; } }
+    .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse 100% 60% at 10% 0%, rgba(56,115,70,0.25) 0%, transparent 55%), radial-gradient(ellipse 70% 70% at 90% 100%, rgba(20,65,35,0.25) 0%, transparent 60%); }
+    .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 1.25rem 5rem; }
     .hdr { text-align: center; padding: 3rem 0 2.5rem; }
     .hdr h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem,7vw,4rem); font-weight: 600; line-height: 1; color: #e4d9c8; }
     .hdr h1 em { color: #6db87a; font-style: italic; }
     .hdr p { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: #4e8056; margin-top: 0.55rem; }
     .hdr-rule { width: 56px; height: 1px; background: linear-gradient(to right, transparent, #3a6040, transparent); margin: 1.1rem auto 0; }
-    #loc-btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-      padding: 0.65rem 1.3rem; border-radius: 100px; border: 1px solid rgba(109,184,122,0.4);
-      cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500;
-      color: #6db87a; background: none; margin: 0 auto 0.75rem; width: fit-content;
-    }
+    #loc-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.65rem 1.3rem; border-radius: 100px; border: 1px solid rgba(109,184,122,0.4); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; color: #6db87a; background: none; margin: 0 auto 0.75rem; width: fit-content; }
     #loc-btn.ok   { border-color: #6db87a; color: #8dd49a; background: rgba(109,184,122,0.1); }
     #loc-btn.deny { border-color: rgba(220,100,80,0.4); color: #e08878; }
-    #loc-help {
-      display: none; font-size: 0.75rem; color: #6a9070; text-align: center;
-      margin-bottom: 1.5rem; line-height: 1.6;
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px; padding: 0.75rem 1rem;
-    }
+    #loc-help { display: none; font-size: 0.75rem; color: #6a9070; text-align: center; margin-bottom: 1.5rem; line-height: 1.6; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.75rem 1rem; }
     .sec-lbl { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: #4e8056; margin-bottom: 0.9rem; font-weight: 600; }
     .mb175 { margin-bottom: 1.75rem; }
     .mb1   { margin-bottom: 1rem; }
     .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
     .g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.6rem; }
+    .scard { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 13px; padding: 1.1rem 1.25rem; }
+    .scard-lbl { font-size: 0.78rem; color: #6a9070; margin-bottom: 0.15rem; }
+    .scard-val { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: #e4d9c8; margin-bottom: 0.55rem; line-height: 1; }
+    .scard-val small { font-size: 0.82rem; color: #6a9070; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 3px; border-radius: 2px; background: rgba(109,184,122,0.25); outline: none; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #6db87a; cursor: pointer; box-shadow: 0 0 0 4px rgba(109,184,122,0.2); }
+    select { width: 100%; padding: 0.72rem 2.2rem 0.72rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; cursor: pointer; outline: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234e8056'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; }
+    select option { background: #182e1e; color: #e4d9c8; }
+    .sel-wrap label { font-size: 0.78rem; color: #6a9070; display: block; margin-bottom: 0.45rem; }
+    .toggle { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; padding: 1rem 0.5rem; border-radius: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); transition: all 0.2s; text-align: center; user-select: none; }
+    .toggle.on { background: rgba(109,184,122,0.12); border-color: rgba(109,184,122,0.4); }
+    .toggle-ico { font-size: 1.5rem; }
+    .toggle-lbl { font-size: 0.7rem; color: #6a9070; }
+    .toggle.on .toggle-lbl { color: #8dd49a; }
+    #search-btn { width: 100%; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg,#3d7a4a,#2b5e38); color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
+    #loading { display: none; text-align: center; padding: 5rem 1rem; }
+    .spinner { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(109,184,122,0.12); border-top-color: #6db87a; animation: spin 0.9s linear infinite; margin: 0 auto 1.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; margin-bottom: 0.4rem; color: #e4d9c8; }
+    #loading p { font-size: 0.85rem; color: #4e8056; }
+    .loading-steps { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .loading-step { font-size: 0.78rem; color: #3a6040; }
+    #results { display: none; }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #6a9070; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; }
+    .weather { display: flex; gap: 1.4rem; align-items: center; background: rgba(109,184,122,0.07); border: 1px solid rgba(109,184,122,0.15); border-radius: 14px; padding: 1.2rem 1.5rem; margin-bottom: 1.75rem; }
+    .weather-temp { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: #6db87a; line-height: 1; white-space: nowrap; }
+    .weather-cond { font-size: 0.95rem; font-weight: 500; color: #e4d9c8; margin-bottom: 0.2rem; }
+    .weather-adv  { font-size: 0.8rem; color: #6a9070; }
+    .hcard { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; overflow: hidden; }
+    .hcard-photo { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem; background: rgba(255,255,255,0.04); display: block; }
+    .hcard-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.7rem; }
+    .hcard-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; line-height: 1.15; color: #e4d9c8; }
+    .hcard-loc  { font-size: 0.78rem; color: #4e8056; margin-top: 0.2rem; }
+    .badge { padding: 0.2rem 0.65rem; border-radius: 100px; font-size: 0.68rem; font-weight: 600; white-space: nowrap; }
+    .b-easy { background: rgba(100,200,120,0.14); color: #7dd492; }
+    .b-mod  { background: rgba(200,170,80,0.14);  color: #d4b86a; }
+    .b-hard { background: rgba(220,120,60,0.14);  color: #e09060; }
+    .b-str  { background: rgba(220,80,60,0.14);   color: #e07060; }
+    .child-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 100px; background: rgba(255,200,100,0.12); color: #f0c060; margin-left: 0.4rem; vertical-align: middle; }
+    .stats { display: flex; flex-wrap: wrap; gap: 0.4rem 0; margin: 0.85rem 0; }
+    .stat  { font-size: 0.78rem; color: #8aaa90; margin-right: 0.8rem; }
+    .stat strong { color: #e4d9c8; }
+    .desc { font-size: 0.865rem; line-height: 1.65; color: #aec4b2; margin-bottom: 0.85rem; }
+    .highlights { list-style: none; margin-bottom: 0.85rem; }
+    .highlights li { font-size: 0.78rem; color: #8aaa90; padding: 0.18rem 0; display: flex; align-items: center; gap: 0.5rem; }
+    .highlights li::before { content: '◆'; font-size: 0.38rem; color: #5db86a; flex-shrink: 0; }
+    .hcard-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding-top: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06); gap: 0.6rem; }
+    .facilities { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .fac { font-size: 0.7rem; color: #6a9070; padding: 0.18rem 0.5rem; background: rgba(255,255,255,0.04); border-radius: 6px; }
+    .suit { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 6px; }
+    .s-exc  { background: rgba(100,200,120,0.14); color: #7dd492; }
+    .s-good { background: rgba(80,180,200,0.14);  color: #70c8d4; }
+    .s-fair { background: rgba(200,170,80,0.14);  color: #d4b86a; }
+    .s-poor { background: rgba(220,80,60,0.14);   color: #e07060; }
+    .weather-note { font-size: 0.74rem; color: #4a6e52; margin-top: 0.45rem; }
+    .why { font-size: 0.76rem; color: #4e8056; font-style: italic; margin-top: 0.5rem; }
+    .busy-bar { margin-top: 0.85rem; padding: 0.75rem 1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; }
+    .busy-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; }
+    .busy-lbl { font-size: 0.72rem; color: #6a9070; }
+    .busy-val { font-size: 0.72rem; font-weight: 600; }
+    .busy-quiet { color: #7dd492; } .busy-mod { color: #d4b86a; } .busy-busy { color: #e09060; } .busy-vbusy { color: #e07060; }
+    .busy-dots { display: flex; gap: 4px; margin-top: 0.3rem; }
+    .busy-dot { width: 28px; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.08); }
+    .busy-dot.on-quiet { background: #7dd492; } .busy-dot.on-mod { background: #d4b86a; } .busy-dot.on-busy { background: #e09060; } .busy-dot.on-vbusy { background: #e07060; }
+    .busy-note { font-size: 0.72rem; color: #4e8056; margin-top: 0.4rem; font-style: italic; }
+    .hcard-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
+    .hlink { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.75rem; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+    .hlink-dir   { background: rgba(52,168,83,0.12);  color: #6db87a; border: 1px solid rgba(52,168,83,0.25); }
+    .hlink-web   { background: rgba(109,184,122,0.1); color: #7dd492; border: 1px solid rgba(109,184,122,0.25); }
+    .hlink-share { background: rgba(255,255,255,0.05); color: #aec4b2; border: 1px solid rgba(255,255,255,0.1); }
+    .err { background: rgba(220,80,60,0.09); border: 1px solid rgba(220,80,60,0.2); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.83rem; color: #e08070; margin-bottom: 1rem; display: none; }
 
 ```
-/* Home screen banner */
+/* Install banner — fixed to bottom */
 #hs-banner {
-  display: none; margin-bottom: 1.5rem;
-  background: rgba(109,184,122,0.08); border: 1px solid rgba(109,184,122,0.2);
-  border-radius: 14px; padding: 1rem 1.1rem; position: relative;
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: #132b1a; border-top: 1px solid rgba(109,184,122,0.25);
+  padding: 0.9rem 1.25rem; align-items: center; gap: 1rem;
 }
-#hs-banner p { font-size: 0.82rem; color: #8aaa90; line-height: 1.6; }
+#hs-banner.show { display: flex; }
+#hs-banner p { font-size: 0.8rem; color: #8aaa90; line-height: 1.5; flex: 1; }
 #hs-banner strong { color: #e4d9c8; }
-#hs-banner .hs-title { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: #6db87a; margin-bottom: 0.4rem; font-weight: 600; }
-#hs-close { position: absolute; top: 0.7rem; right: 0.9rem; background: none; border: none; color: #4e8056; font-size: 1.1rem; cursor: pointer; padding: 0; }
+#hs-close { background: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #4e8056; font-size: 0.8rem; cursor: pointer; padding: 0.3rem 0.7rem; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
 
-/* Trail photo */
-.hcard-photo { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem; background: rgba(255,255,255,0.04); }
-
-/* Share & directions buttons */
-.hlink-dir  { background: rgba(52,168,83,0.12); color: #6db87a; border: 1px solid rgba(52,168,83,0.25); }
-.hlink-dir:hover  { background: rgba(52,168,83,0.22); }
-.hlink-share { background: rgba(255,255,255,0.05); color: #aec4b2; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; font-family: inherit; }
-.hlink-share:hover { background: rgba(255,255,255,0.1); }
-.busy-bar { margin-top: 0.85rem; padding: 0.75rem 1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; }
-.busy-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; }
-.busy-lbl { font-size: 0.72rem; color: #6a9070; }
-.busy-val { font-size: 0.72rem; font-weight: 600; }
-.busy-quiet  { color: #7dd492; }
-.busy-mod    { color: #d4b86a; }
-.busy-busy   { color: #e09060; }
-.busy-vbusy  { color: #e07060; }
-.busy-dots { display: flex; gap: 4px; margin-top: 0.3rem; }
-.busy-dot { width: 28px; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.08); }
-.busy-dot.on-quiet { background: #7dd492; }
-.busy-dot.on-mod   { background: #d4b86a; }
-.busy-dot.on-busy  { background: #e09060; }
-.busy-dot.on-vbusy { background: #e07060; }
-.busy-note { font-size: 0.72rem; color: #4e8056; margin-top: 0.4rem; font-style: italic; }
-.child-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 100px; background: rgba(255,200,100,0.12); color: #f0c060; margin-left: 0.4rem; }
-.scard { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 13px; padding: 1.1rem 1.25rem; }
-.scard-lbl { font-size: 0.78rem; color: #6a9070; margin-bottom: 0.15rem; }
-.scard-val { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: #e4d9c8; margin-bottom: 0.55rem; line-height: 1; }
-.scard-val small { font-size: 0.82rem; color: #6a9070; font-family: 'DM Sans', sans-serif; font-weight: 400; }
-input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 3px; border-radius: 2px; background: rgba(109,184,122,0.25); outline: none; }
-input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #6db87a; cursor: pointer; box-shadow: 0 0 0 4px rgba(109,184,122,0.2); }
-select {
-  width: 100%; padding: 0.72rem 2.2rem 0.72rem 1rem;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px; color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
-  cursor: pointer; outline: none; appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234e8056'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 0.9rem center;
-}
-select option { background: #182e1e; color: #e4d9c8; }
-.sel-wrap label { font-size: 0.78rem; color: #6a9070; display: block; margin-bottom: 0.45rem; }
-.toggle { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; padding: 1rem 0.5rem; border-radius: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); transition: all 0.2s; text-align: center; user-select: none; }
-.toggle.on { background: rgba(109,184,122,0.12); border-color: rgba(109,184,122,0.4); }
-.toggle-ico { font-size: 1.5rem; }
-.toggle-lbl { font-size: 0.7rem; color: #6a9070; }
-.toggle.on .toggle-lbl { color: #8dd49a; }
-#search-btn { width: 100%; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg,#3d7a4a,#2b5e38); color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
-#loading { display: none; text-align: center; padding: 5rem 1rem; }
-.spinner { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(109,184,122,0.12); border-top-color: #6db87a; animation: spin 0.9s linear infinite; margin: 0 auto 1.5rem; }
-@keyframes spin { to { transform: rotate(360deg); } }
-#loading h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; margin-bottom: 0.4rem; color: #e4d9c8; }
-#loading p { font-size: 0.85rem; color: #4e8056; }
-.loading-steps { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
-.loading-step { font-size: 0.78rem; color: #3a6040; }
-#results { display: none; }
-.back-btn { display: flex; align-items: center; gap: 0.5rem; background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #6a9070; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; }
-.weather { display: flex; gap: 1.4rem; align-items: center; background: rgba(109,184,122,0.07); border: 1px solid rgba(109,184,122,0.15); border-radius: 14px; padding: 1.2rem 1.5rem; margin-bottom: 1.75rem; }
-.weather-temp { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: #6db87a; line-height: 1; white-space: nowrap; }
-.weather-cond { font-size: 0.95rem; font-weight: 500; color: #e4d9c8; margin-bottom: 0.2rem; }
-.weather-adv  { font-size: 0.8rem; color: #6a9070; }
-.hcard { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; }
-.hcard-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.7rem; }
-.hcard-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 600; line-height: 1.15; color: #e4d9c8; }
-.hcard-loc  { font-size: 0.78rem; color: #4e8056; margin-top: 0.2rem; }
-.badge { padding: 0.2rem 0.65rem; border-radius: 100px; font-size: 0.68rem; font-weight: 600; white-space: nowrap; }
-.b-easy { background: rgba(100,200,120,0.14); color: #7dd492; }
-.b-mod  { background: rgba(200,170,80,0.14);  color: #d4b86a; }
-.b-hard { background: rgba(220,120,60,0.14);  color: #e09060; }
-.b-str  { background: rgba(220,80,60,0.14);   color: #e07060; }
-.stats { display: flex; flex-wrap: wrap; gap: 0.4rem 0; margin: 0.85rem 0; }
-.stat  { font-size: 0.78rem; color: #8aaa90; margin-right: 0.8rem; }
-.stat strong { color: #e4d9c8; }
-.desc { font-size: 0.865rem; line-height: 1.65; color: #aec4b2; margin-bottom: 0.85rem; }
-.highlights { list-style: none; margin-bottom: 0.85rem; }
-.highlights li { font-size: 0.78rem; color: #8aaa90; padding: 0.18rem 0; display: flex; align-items: center; gap: 0.5rem; }
-.highlights li::before { content: '◆'; font-size: 0.38rem; color: #5db86a; flex-shrink: 0; }
-.hcard-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding-top: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06); gap: 0.6rem; }
-.facilities { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.fac { font-size: 0.7rem; color: #6a9070; padding: 0.18rem 0.5rem; background: rgba(255,255,255,0.04); border-radius: 6px; }
-.suit { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.65rem; border-radius: 6px; }
-.s-exc  { background: rgba(100,200,120,0.14); color: #7dd492; }
-.s-good { background: rgba(80,180,200,0.14);  color: #70c8d4; }
-.s-fair { background: rgba(200,170,80,0.14);  color: #d4b86a; }
-.s-poor { background: rgba(220,80,60,0.14);   color: #e07060; }
-.weather-note { font-size: 0.74rem; color: #4a6e52; margin-top: 0.45rem; }
-.why { font-size: 0.76rem; color: #4e8056; font-style: italic; margin-top: 0.5rem; }
-.hcard-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
-.hlink {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.75rem;
-  font-family: 'DM Sans', sans-serif; font-weight: 500;
-  text-decoration: none; transition: all 0.2s; cursor: pointer;
-}
-.hlink-map  { background: rgba(66,133,244,0.12); color: #7ab3f5; border: 1px solid rgba(66,133,244,0.25); }
-.hlink-map:hover  { background: rgba(66,133,244,0.22); }
-.hlink-web  { background: rgba(109,184,122,0.1); color: #7dd492; border: 1px solid rgba(109,184,122,0.25); }
-.hlink-web:hover  { background: rgba(109,184,122,0.2); }
-.err { background: rgba(220,80,60,0.09); border: 1px solid rgba(220,80,60,0.2); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.83rem; color: #e08070; margin-bottom: 1rem; display: none; }
 @media (max-width: 480px) {
   .g2 { grid-template-columns: 1fr; }
   .g4 { grid-template-columns: 1fr 1fr; }
@@ -179,24 +128,19 @@ select option { background: #182e1e; color: #e4d9c8; }
 <body>
   <div class="bg-glow"></div>
   <div class="wrap">
-    <header class="hdr">
-      <h1>Trail<em>finder</em> Ireland</h1>
-      <p>Discover your perfect hike</p>
-      <div class="hdr-rule"></div>
-    </header>
 
 ```
-<!-- Home screen install banner (iOS) -->
-<div id="hs-banner">
-  <button id="hs-close">✕</button>
-  <p class="hs-title">📲 Install this app</p>
-  <p>Add Trailfinder to your home screen for quick access.<br>
-  Tap <strong>Share ⬆</strong> at the bottom of Safari, then tap <strong>"Add to Home Screen"</strong>.</p>
-</div>
+<header class="hdr">
+  <h1>Trail<em>finder</em> Ireland</h1>
+  <p>Discover your perfect hike</p>
+  <div class="hdr-rule"></div>
+</header>
+
 <div id="form">
   <div id="err-box" class="err"></div>
   <button id="loc-btn">📍 Share my location</button>
   <div id="loc-help"></div>
+
   <div class="mb175">
     <p class="sec-lbl">How far will you travel?</p>
     <div class="scard">
@@ -205,6 +149,7 @@ select option { background: #182e1e; color: #e4d9c8; }
       <input type="range" id="travelKm" min="10" max="200" step="5" value="60">
     </div>
   </div>
+
   <div class="mb175">
     <p class="sec-lbl">How long do you want to hike?</p>
     <div class="g2">
@@ -220,6 +165,7 @@ select option { background: #182e1e; color: #e4d9c8; }
       </div>
     </div>
   </div>
+
   <div class="mb175">
     <p class="sec-lbl">Trail distance preference</p>
     <div class="g2">
@@ -235,6 +181,7 @@ select option { background: #182e1e; color: #e4d9c8; }
       </div>
     </div>
   </div>
+
   <div class="mb175">
     <p class="sec-lbl">Difficulty & elevation gain</p>
     <div class="g2">
@@ -259,8 +206,9 @@ select option { background: #182e1e; color: #e4d9c8; }
       </div>
     </div>
   </div>
+
   <div class="mb175">
-    <p class="sec-lbl">Facilities needed</p>
+    <p class="sec-lbl">Facilities & preferences</p>
     <div class="g4">
       <div class="toggle" id="tog-carPark"><span class="toggle-ico">🅿️</span><span class="toggle-lbl">Car Park</span></div>
       <div class="toggle" id="tog-toilet"><span class="toggle-ico">🚻</span><span class="toggle-lbl">Toilets</span></div>
@@ -268,8 +216,10 @@ select option { background: #182e1e; color: #e4d9c8; }
       <div class="toggle" id="tog-child"><span class="toggle-ico">👶</span><span class="toggle-lbl">Child Friendly</span></div>
     </div>
   </div>
+
   <button id="search-btn">Find my perfect hike →</button>
 </div>
+
 <div id="loading">
   <div class="spinner"></div>
   <h2>Searching the trails…</h2>
@@ -280,6 +230,7 @@ select option { background: #182e1e; color: #e4d9c8; }
     <p class="loading-step">✨ Matching to your preferences</p>
   </div>
 </div>
+
 <div id="results">
   <button class="back-btn" id="back-btn">← New search</button>
   <div id="results-inner"></div>
@@ -287,136 +238,303 @@ select option { background: #182e1e; color: #e4d9c8; }
 ```
 
   </div>
+
+  <!-- Install banner fixed to bottom -->
+
+  <div id="hs-banner">
+    <p>📲 <strong>Install this app:</strong> Tap <strong>Share ⬆</strong> in Safari then <strong>"Add to Home Screen"</strong></p>
+    <button id="hs-close">Dismiss</button>
+  </div>
+
   <script>
-    let userLat=null,userLng=null;
-    const tog={carPark:false,toilet:false,food:false,child:false};
-    [['travelKm','travelVal'],['minDurHrs','minDurVal'],['maxDurHrs','maxDurVal'],['minDistKm','minDistVal'],['maxDistKm','maxDistVal']].forEach(([id,valId])=>{
-      document.getElementById(id).addEventListener('input',function(){document.getElementById(valId).textContent=this.value;});
+    // ── State ──
+    var userLat = null, userLng = null;
+    var tog = { carPark: false, toilet: false, food: false, child: false };
+
+    // ── Sliders ──
+    var sliderMap = [
+      ['travelKm',  'travelVal'],
+      ['minDurHrs', 'minDurVal'],
+      ['maxDurHrs', 'maxDurVal'],
+      ['minDistKm', 'minDistVal'],
+      ['maxDistKm', 'maxDistVal']
+    ];
+    sliderMap.forEach(function(pair) {
+      var el = document.getElementById(pair[0]);
+      var vl = document.getElementById(pair[1]);
+      el.addEventListener('input', function() { vl.textContent = el.value; });
     });
-    ['carPark','toilet','food','child'].forEach(k=>{
-      document.getElementById('tog-'+k).addEventListener('click',()=>{tog[k]=!tog[k];document.getElementById('tog-'+k).classList.toggle('on',tog[k]);});
+
+    // ── Toggles ──
+    ['carPark','toilet','food','child'].forEach(function(k) {
+      document.getElementById('tog-' + k).addEventListener('click', function() {
+        tog[k] = !tog[k];
+        this.classList.toggle('on', tog[k]);
+      });
     });
-    const locBtn=document.getElementById('loc-btn');
-    const locHelp=document.getElementById('loc-help');
-    locBtn.addEventListener('click',()=>{
-      if(userLat)return;
-      locBtn.textContent='⏳ Getting location…';
-      locHelp.style.display='none';
-      if(!navigator.geolocation){locBtn.textContent='⚠️ Location not supported';locBtn.classList.add('deny');return;}
+
+    // ── Location ──
+    var locBtn  = document.getElementById('loc-btn');
+    var locHelp = document.getElementById('loc-help');
+    locBtn.addEventListener('click', function() {
+      if (userLat) return;
+      locBtn.textContent = '⏳ Getting location…';
+      locHelp.style.display = 'none';
+      if (!navigator.geolocation) {
+        locBtn.textContent = '⚠️ Location not supported';
+        locBtn.classList.add('deny');
+        return;
+      }
       navigator.geolocation.getCurrentPosition(
-        pos=>{userLat=pos.coords.latitude;userLng=pos.coords.longitude;locBtn.textContent='✅ Location detected';locBtn.classList.add('ok');},
-        ()=>{
-          locBtn.textContent='⚠️ Location blocked — tap to retry';
-          locBtn.classList.add('deny');
-          userLat=null;
-          locHelp.style.display='block';
-          locHelp.innerHTML='<strong style="color:#e4d9c8">To allow location on iPhone:</strong><br>Open <strong>Settings</strong> → scroll to <strong>Safari</strong> → tap <strong>Location</strong> → choose <strong>Allow</strong>. Then come back and tap the button again.';
+        function(pos) {
+          userLat = pos.coords.latitude;
+          userLng = pos.coords.longitude;
+          locBtn.textContent = '✅ Location detected';
+          locBtn.classList.add('ok');
         },
-        {timeout:10000,enableHighAccuracy:true}
+        function() {
+          locBtn.textContent = '⚠️ Location blocked — tap to retry';
+          locBtn.classList.add('deny');
+          userLat = null;
+          locHelp.style.display = 'block';
+          locHelp.innerHTML = '<strong style="color:#e4d9c8">To allow location on iPhone:</strong><br>Open <strong>Settings</strong> → scroll to <strong>Safari</strong> → tap <strong>Location</strong> → choose <strong>Allow</strong>. Then tap the button again.';
+        },
+        { timeout: 10000, enableHighAccuracy: true }
       );
     });
-    function showView(n){
-      document.getElementById('form').style.display=n==='form'?'block':'none';
-      document.getElementById('loading').style.display=n==='loading'?'block':'none';
-      document.getElementById('results').style.display=n==='results'?'block':'none';
+
+    // ── Views ──
+    function showView(n) {
+      document.getElementById('form').style.display    = n === 'form'    ? 'block' : 'none';
+      document.getElementById('loading').style.display = n === 'loading' ? 'block' : 'none';
+      document.getElementById('results').style.display = n === 'results' ? 'block' : 'none';
     }
     showView('form');
-    document.getElementById('back-btn').addEventListener('click',()=>showView('form'));
+    document.getElementById('back-btn').addEventListener('click', function() { showView('form'); });
 
-```
-// Home screen banner — show on iOS Safari if not dismissed
-const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-const isStandalone=window.navigator.standalone;
-const hsDismissed=localStorage.getItem('hs-dismissed');
-if(isIOS&&!isStandalone&&!hsDismissed){
-  document.getElementById('hs-banner').style.display='block';
-}
-document.getElementById('hs-close').addEventListener('click',()=>{
-  document.getElementById('hs-banner').style.display='none';
-  localStorage.setItem('hs-dismissed','1');
-});
-function showError(m){const el=document.getElementById('err-box');el.textContent='⚠ '+m;el.style.display='block';}
-function clearError(){document.getElementById('err-box').style.display='none';}
-function diffClass(d){return({Easy:'b-easy',Moderate:'b-mod',Hard:'b-hard',Strenuous:'b-str'}[d]||'b-easy');}
-function suitClass(s){return({Excellent:'s-exc',Good:'s-good',Fair:'s-fair',Poor:'s-poor'}[s]||'s-good');}
-function fmtDur(h){return h==1?'1 hr':h+' hrs';}
-document.getElementById('search-btn').addEventListener('click',async()=>{
-  clearError();
-  const travelKm=document.getElementById('travelKm').value;
-  const minDurHrs=document.getElementById('minDurHrs').value;
-  const maxDurHrs=document.getElementById('maxDurHrs').value;
-  const minDistKm=document.getElementById('minDistKm').value;
-  const maxDistKm=document.getElementById('maxDistKm').value;
-  const difficulty=document.getElementById('difficulty').value;
-  const elevation=document.getElementById('elevation').value;
-  const locStr=userLat?`latitude ${userLat.toFixed(5)}, longitude ${userLng.toFixed(5)}, Ireland`:'Ireland (no specific location)';
-  const facList=[tog.carPark&&'car park',tog.toilet&&'public toilet',tog.food&&'food nearby',tog.child&&'child friendly (suitable for young children, safe paths, manageable distance)'].filter(Boolean);
-  const elevLabel=elevation==='low'?'Low under 300m':elevation==='medium'?'Medium 300-600m':elevation==='high'?'High 600m+':'No preference';
-  const today=new Date().toLocaleDateString('en-IE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const prompt=`Find me 3 hiking trail recommendations in Ireland.\nMy location: ${locStr}\nMax travel: ${travelKm} km\nHike duration: ${minDurHrs}-${maxDurHrs} hours\nHike distance: ${minDistKm}-${maxDistKm} km\nElevation: ${elevLabel}\nDifficulty: ${difficulty==='any'?'No preference':difficulty}\nRequired facilities: ${facList.length?facList.join(', '):'none'}\nToday: ${today}\n\nSearch for current weather near my location first, then find 3 specific real trails.\nReturn ONLY valid JSON no markdown no backticks:\n{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string"},"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string","highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string","photo_query":"short descriptive query for a landscape photo e.g. ireland wicklow mountains misty trail","child_friendly":false,"child_friendly_notes":"brief note on why suitable or not for children","busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"one sentence — why busy or quiet today based on day of week season and weather","best_time_to_visit":"string e.g. Early morning weekdays"},"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}`;
-  showView('loading');
-  try{
-    const res=await fetch('/api/hikes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,tools:[{type:'web_search_20250305',name:'web_search'}],system:'You are an expert Irish hiking guide. Always check live weather first. Only recommend real existing trails. Respond ONLY with valid JSON no markdown no backticks no preamble.',messages:[{role:'user',content:prompt}]})});
-    const data=await res.json();
-    if(data.error)throw new Error(data.error.message);
-    const raw=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    const clean=raw.replace(/```json\n?|```\n?/g,'').trim();
-    let parsed;
-    try{parsed=JSON.parse(clean);}catch{const m=clean.match(/\{[\s\S]*\}/);if(!m)throw new Error('Could not read trail recommendations. Please try again.');parsed=JSON.parse(m[0]);}
-    renderResults(parsed);showView('results');
-  }catch(e){showView('form');showError(e.message||'Something went wrong. Please try again.');}
-});
-function renderResults(data){
-  const w=data.weather||{};const hikes=data.hikes||[];let html='';
-  if(w.temperature_c!==undefined){html+=`<div class="weather mb175"><div class="weather-temp">${w.temperature_c}°</div><div><p class="weather-cond">${w.conditions||''} · ${w.location_name||''}</p><p class="weather-adv">${w.hiking_advisory||''}</p></div></div>`;}
-  html+=`<p class="sec-lbl mb1">${hikes.length} trails recommended for you</p>`;
-  hikes.forEach(h=>{
-    const dist=h.approx_distance_from_user_km>0?`<span class="stat">🚗 ~${h.approx_distance_from_user_km} km away</span>`:'';
-    const facs=[h.facilities?.car_park?'<span class="fac">🅿️ Car park</span>':'',h.facilities?.toilet?'<span class="fac">🚻 Toilets</span>':'',h.facilities?.nearby_food?`<span class="fac">🍺 ${h.facilities.food_note||'Food nearby'}</span>`:''].join('')||'<span class="fac" style="color:#3a5c40">No listed facilities</span>';
-    const hls=(h.highlights||[]).map(hl=>`<li>${hl}</li>`).join('');
+    // ── Home screen banner ──
+    var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    var isStandalone = window.navigator.standalone;
+    var hsDismissed = localStorage.getItem('hs-dismissed');
+    if (isIOS && !isStandalone && !hsDismissed) {
+      document.getElementById('hs-banner').classList.add('show');
+    }
+    document.getElementById('hs-close').addEventListener('click', function() {
+      document.getElementById('hs-banner').classList.remove('show');
+      localStorage.setItem('hs-dismissed', '1');
+    });
 
-    // Photo from Unsplash
-    const photoQuery=encodeURIComponent(h.photo_query||'ireland hiking trail landscape');
-    const photoUrl=`https://source.unsplash.com/800x400/?${photoQuery}`;
-    const photoHtml=`<img class="hcard-photo" src="${photoUrl}" alt="${h.name}" loading="lazy" onerror="this.style.display='none'">`;
+    // ── Error ──
+    function showError(m) { var el = document.getElementById('err-box'); el.textContent = '⚠ ' + m; el.style.display = 'block'; }
+    function clearError() { document.getElementById('err-box').style.display = 'none'; }
 
-    // Directions (driving to trailhead)
-    const dirUrl=h.lat&&h.lng
-      ?`https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lng}&travelmode=driving`
-      :`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(h.name+' trail '+h.county+' Ireland')}&travelmode=driving`;
+    // ── Helpers ──
+    function diffClass(d) { return ({Easy:'b-easy',Moderate:'b-mod',Hard:'b-hard',Strenuous:'b-str'}[d] || 'b-easy'); }
+    function suitClass(s) { return ({Excellent:'s-exc',Good:'s-good',Fair:'s-fair',Poor:'s-poor'}[s] || 's-good'); }
+    function busyClass(l) { return ({Quiet:'quiet',Moderate:'mod',Busy:'busy','Very Busy':'vbusy'}[l] || 'mod'); }
+    function fmtDur(h)    { return h == 1 ? '1 hr' : h + ' hrs'; }
 
-    // Share
-    const shareText=`🥾 ${h.name}, Co. ${h.county}\n${h.distance_km}km · ${h.duration_hours}hrs · ${h.difficulty}\n\n${h.description}\n\n📍 Directions: ${dirUrl}`;
-    const shareBtn=`<button class="hlink hlink-share" onclick="navigator.share?navigator.share({title:'${h.name.replace(/'/g,"\\'")}',text:\`${shareText.replace(/`/g,'\\`')}\`}):alert('Sharing not supported on this browser')">📤 Share trail</button>`;
+    // ── Share ──
+    function shareTrial(name, county, km, hrs, diff, desc, dirUrl) {
+      var text = name + ', Co. ' + county + '\n' + km + 'km · ' + hrs + 'hrs · ' + diff + '\n\n' + desc + '\n\nDirections: ' + dirUrl;
+      if (navigator.share) {
+        navigator.share({ title: name, text: text }).catch(function() {});
+      } else {
+        alert('Copy this to share:\n\n' + text);
+      }
+    }
 
-    const linksHtml=`<div class="hcard-links">
-      <a class="hlink hlink-dir" href="${dirUrl}" target="_blank" rel="noopener">🧭 Get directions</a>
-      ${h.official_website?`<a class="hlink hlink-web" href="${h.official_website}" target="_blank" rel="noopener">🔗 Official website</a>`:''}
-      ${shareBtn}
-    </div>`;
-    const childBadge=h.child_friendly?`<span class="child-badge">👶 Child Friendly</span>`:'';
-    function busyClass(level){return{Quiet:'quiet',Moderate:'mod',Busy:'busy','Very Busy':'vbusy'}[level]||'mod';}
-    const b=h.busyness||{};
-    const bGeneral=b.general_level||'Moderate';
-    const bToday=b.today_prediction||'Moderate';
-    const bClass=busyClass(bToday);
-    const dotCount={Quiet:1,Moderate:2,Busy:3,'Very Busy':4}[bToday]||2;
-    const dots=[1,2,3,4].map(i=>`<div class="busy-dot${i<=dotCount?' on-'+bClass:''}"></div>`).join('');
-    const busyHtml=`<div class="busy-bar">
-      <div class="busy-row">
-        <span class="busy-lbl">🕐 Trail busyness today</span>
-        <span class="busy-val busy-${bClass}">${bToday}</span>
-      </div>
-      <div class="busy-dots">${dots}</div>
-      ${b.today_note?`<p class="busy-note">${b.today_note}</p>`:''}
-      ${b.best_time_to_visit?`<p class="busy-note">💡 Best time: ${b.best_time_to_visit}</p>`:''}
-    </div>`;
-    html+=`<div class="hcard">${photoHtml}<div class="hcard-head"><div><h2 class="hcard-name">${h.name}${childBadge}</h2><p class="hcard-loc">📍 ${h.nearby_town}, Co. ${h.county}</p></div><span class="badge ${diffClass(h.difficulty)}">${h.difficulty}</span></div><div class="stats"><span class="stat">⏱ <strong>${fmtDur(h.duration_hours)}</strong></span><span class="stat">📏 <strong>${h.distance_km} km</strong></span><span class="stat">⛰ <strong>${h.elevation_gain_m} m</strong> gain</span><span class="stat">🔄 ${h.trail_type}</span>${dist}</div><p class="desc">${h.description}</p>${hls?`<ul class="highlights">${hls}</ul>`:''}<div class="hcard-foot"><div class="facilities">${facs}</div><span class="suit ${suitClass(h.weather_suitability)}">${h.weather_suitability} today</span></div>${h.weather_note?`<p class="weather-note">☁️ ${h.weather_note}</p>`:''}${h.why_recommended?`<p class="why">✓ ${h.why_recommended}</p>`:''}${busyHtml}${linksHtml}</div>`;
-  });
-  document.getElementById('results-inner').innerHTML=html;
-}
-```
+    // Store hike data for share buttons
+    var hikeStore = [];
 
+    // ── Search ──
+    document.getElementById('search-btn').addEventListener('click', async function() {
+      clearError();
+
+      var travelKm  = document.getElementById('travelKm').value;
+      var minDurHrs = document.getElementById('minDurHrs').value;
+      var maxDurHrs = document.getElementById('maxDurHrs').value;
+      var minDistKm = document.getElementById('minDistKm').value;
+      var maxDistKm = document.getElementById('maxDistKm').value;
+      var difficulty = document.getElementById('difficulty').value;
+      var elevation  = document.getElementById('elevation').value;
+
+      var locStr = userLat
+        ? 'latitude ' + userLat.toFixed(5) + ', longitude ' + userLng.toFixed(5) + ', Ireland'
+        : 'Ireland (no specific location — suggest trails from varied counties)';
+
+      var facList = [];
+      if (tog.carPark) facList.push('car park');
+      if (tog.toilet)  facList.push('public toilet');
+      if (tog.food)    facList.push('food nearby (pub or cafe)');
+      if (tog.child)   facList.push('child friendly (safe paths, manageable terrain for young children)');
+
+      var elevLabel = elevation === 'low' ? 'Low under 300m' : elevation === 'medium' ? 'Medium 300-600m' : elevation === 'high' ? 'High 600m+' : 'No preference';
+      var today = new Date().toLocaleDateString('en-IE', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+      var prompt = 'Find me 3 hiking trail recommendations in Ireland.\n'
+        + 'My location: ' + locStr + '\n'
+        + 'Max travel: ' + travelKm + ' km\n'
+        + 'Hike duration: ' + minDurHrs + '-' + maxDurHrs + ' hours\n'
+        + 'Hike distance: ' + minDistKm + '-' + maxDistKm + ' km\n'
+        + 'Elevation: ' + elevLabel + '\n'
+        + 'Difficulty: ' + (difficulty === 'any' ? 'No preference' : difficulty) + '\n'
+        + 'Required: ' + (facList.length ? facList.join(', ') : 'none') + '\n'
+        + 'Today: ' + today + '\n\n'
+        + 'Search for current weather near my location first, then find 3 specific real trails.\n'
+        + 'Return ONLY valid JSON, no markdown, no backticks:\n'
+        + '{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string"},'
+        + '"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,'
+        + '"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string",'
+        + '"highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},'
+        + '"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string",'
+        + '"photo_query":"short scenic description e.g. wicklow mountains ireland misty forest trail",'
+        + '"child_friendly":false,"child_friendly_notes":"string",'
+        + '"busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"string","best_time_to_visit":"string"},'
+        + '"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}';
+
+      showView('loading');
+
+      try {
+        var res = await fetch('/api/hikes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-6',
+            max_tokens: 4000,
+            tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+            system: 'You are an expert Irish hiking guide. Always check live weather first. Only recommend real existing trails. Respond ONLY with valid JSON, no markdown, no backticks, no preamble.',
+            messages: [{ role: 'user', content: prompt }]
+          })
+        });
+
+        var data = await res.json();
+        if (data.error) throw new Error(data.error.message);
+
+        var raw = (data.content || []).filter(function(b) { return b.type === 'text'; }).map(function(b) { return b.text; }).join('');
+        var clean = raw.replace(/```json\n?|```\n?/g, '').trim();
+
+        var parsed;
+        try { parsed = JSON.parse(clean); }
+        catch(e) {
+          var m = clean.match(/\{[\s\S]*\}/);
+          if (!m) throw new Error('Could not read trail recommendations. Please try again.');
+          parsed = JSON.parse(m[0]);
+        }
+
+        renderResults(parsed);
+        showView('results');
+
+      } catch(e) {
+        showView('form');
+        showError(e.message || 'Something went wrong. Please try again.');
+      }
+    });
+
+    // ── Render ──
+    function renderResults(data) {
+      var w = data.weather || {};
+      var hikes = data.hikes || [];
+      hikeStore = hikes;
+      var html = '';
+
+      if (w.temperature_c !== undefined) {
+        html += '<div class="weather mb175">'
+          + '<div class="weather-temp">' + w.temperature_c + '°</div>'
+          + '<div><p class="weather-cond">' + (w.conditions||'') + ' · ' + (w.location_name||'') + '</p>'
+          + '<p class="weather-adv">' + (w.hiking_advisory||'') + '</p></div></div>';
+      }
+
+      html += '<p class="sec-lbl mb1">' + hikes.length + ' trails recommended for you</p>';
+
+      hikes.forEach(function(h, idx) {
+        // Photo
+        var pq = encodeURIComponent(h.photo_query || 'ireland hiking trail landscape nature');
+        var photoHtml = '<img class="hcard-photo" src="https://source.unsplash.com/800x400/?' + pq + '" alt="' + h.name + '" loading="lazy" onerror="this.style.display=\'none\'">';
+
+        // Stats
+        var dist = h.approx_distance_from_user_km > 0 ? '<span class="stat">🚗 ~' + h.approx_distance_from_user_km + ' km away</span>' : '';
+
+        // Facilities
+        var facArr = [];
+        if (h.facilities && h.facilities.car_park)    facArr.push('<span class="fac">🅿️ Car park</span>');
+        if (h.facilities && h.facilities.toilet)      facArr.push('<span class="fac">🚻 Toilets</span>');
+        if (h.facilities && h.facilities.nearby_food) facArr.push('<span class="fac">🍺 ' + (h.facilities.food_note || 'Food nearby') + '</span>');
+        var facs = facArr.length ? facArr.join('') : '<span class="fac" style="color:#3a5c40">No listed facilities</span>';
+
+        // Highlights
+        var hlArr = (h.highlights || []).map(function(hl) { return '<li>' + hl + '</li>'; });
+        var hls = hlArr.join('');
+
+        // Child badge
+        var childBadge = h.child_friendly ? '<span class="child-badge">👶 Child Friendly</span>' : '';
+
+        // Busyness
+        var b = h.busyness || {};
+        var bToday = b.today_prediction || 'Moderate';
+        var bc = busyClass(bToday);
+        var dotCount = {Quiet:1, Moderate:2, Busy:3, 'Very Busy':4}[bToday] || 2;
+        var dots = [1,2,3,4].map(function(i) { return '<div class="busy-dot' + (i <= dotCount ? ' on-' + bc : '') + '"></div>'; }).join('');
+        var busyHtml = '<div class="busy-bar">'
+          + '<div class="busy-row"><span class="busy-lbl">🕐 Trail busyness today</span><span class="busy-val busy-' + bc + '">' + bToday + '</span></div>'
+          + '<div class="busy-dots">' + dots + '</div>'
+          + (b.today_note ? '<p class="busy-note">' + b.today_note + '</p>' : '')
+          + (b.best_time_to_visit ? '<p class="busy-note">💡 Best time: ' + b.best_time_to_visit + '</p>' : '')
+          + '</div>';
+
+        // Directions URL
+        var dirUrl = (h.lat && h.lng)
+          ? 'https://www.google.com/maps/dir/?api=1&destination=' + h.lat + ',' + h.lng + '&travelmode=driving'
+          : 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(h.name + ' trail ' + h.county + ' Ireland') + '&travelmode=driving';
+
+        // Links
+        var linksHtml = '<div class="hcard-links">'
+          + '<a class="hlink hlink-dir" href="' + dirUrl + '" target="_blank" rel="noopener">🧭 Get directions</a>'
+          + (h.official_website ? '<a class="hlink hlink-web" href="' + h.official_website + '" target="_blank" rel="noopener">🔗 Official website</a>' : '')
+          + '<button class="hlink hlink-share" data-idx="' + idx + '">📤 Share</button>'
+          + '</div>';
+
+        html += '<div class="hcard">'
+          + photoHtml
+          + '<div class="hcard-head"><div><h2 class="hcard-name">' + h.name + childBadge + '</h2><p class="hcard-loc">📍 ' + h.nearby_town + ', Co. ' + h.county + '</p></div>'
+          + '<span class="badge ' + diffClass(h.difficulty) + '">' + h.difficulty + '</span></div>'
+          + '<div class="stats"><span class="stat">⏱ <strong>' + fmtDur(h.duration_hours) + '</strong></span>'
+          + '<span class="stat">📏 <strong>' + h.distance_km + ' km</strong></span>'
+          + '<span class="stat">⛰ <strong>' + h.elevation_gain_m + ' m</strong> gain</span>'
+          + '<span class="stat">🔄 ' + h.trail_type + '</span>' + dist + '</div>'
+          + '<p class="desc">' + h.description + '</p>'
+          + (hls ? '<ul class="highlights">' + hls + '</ul>' : '')
+          + '<div class="hcard-foot"><div class="facilities">' + facs + '</div>'
+          + '<span class="suit ' + suitClass(h.weather_suitability) + '">' + h.weather_suitability + ' today</span></div>'
+          + (h.weather_note ? '<p class="weather-note">☁️ ' + h.weather_note + '</p>' : '')
+          + (h.why_recommended ? '<p class="why">✓ ' + h.why_recommended + '</p>' : '')
+          + busyHtml + linksHtml
+          + '</div>';
+      });
+
+      document.getElementById('results-inner').innerHTML = html;
+
+      // Attach share button listeners after render
+      document.querySelectorAll('.hlink-share').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var idx = parseInt(this.getAttribute('data-idx'));
+          var h = hikeStore[idx];
+          if (!h) return;
+          var dirUrl = (h.lat && h.lng)
+            ? 'https://www.google.com/maps/dir/?api=1&destination=' + h.lat + ',' + h.lng + '&travelmode=driving'
+            : 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(h.name + ' trail ' + h.county + ' Ireland') + '&travelmode=driving';
+          var text = h.name + ', Co. ' + h.county + '\n'
+            + h.distance_km + 'km · ' + fmtDur(h.duration_hours) + ' · ' + h.difficulty + '\n\n'
+            + h.description + '\n\nDirections: ' + dirUrl;
+          if (navigator.share) {
+            navigator.share({ title: h.name, text: text }).catch(function() {});
+          } else {
+            alert('Copy this to share:\n\n' + text);
+          }
+        });
+      });
+    }
   </script>
+
 </body>
 </html>

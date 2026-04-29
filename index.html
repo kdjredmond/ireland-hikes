@@ -18,93 +18,169 @@
     @media (prefers-color-scheme: light) { html, body { background: #0b1810 !important; color: #e4d9c8 !important; } }
 
 ```
+/* ── Screen reader only ── */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* ── Skip link ── */
+.skip-link { position: absolute; top: -100%; left: 1rem; z-index: 9999; background: #6db87a; color: #0b1810; padding: 0.5rem 1rem; border-radius: 0 0 8px 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: top 0.2s; }
+.skip-link:focus { top: 0; }
+
+/* ── Focus rings (AA visible focus) ── */
+:focus-visible { outline: 2.5px solid #6db87a; outline-offset: 3px; border-radius: 4px; }
+button:focus-visible, a:focus-visible { outline: 2.5px solid #6db87a; outline-offset: 3px; }
+
 .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse 100% 60% at 10% 0%, rgba(56,115,70,0.25) 0%, transparent 55%), radial-gradient(ellipse 70% 70% at 90% 100%, rgba(20,65,35,0.25) 0%, transparent 60%); }
 .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 1.25rem 5rem; }
 
-/* Header */
+/* ── Header ── */
 .hdr { text-align: center; padding: 3rem 0 2.5rem; }
 .hdr h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem,8vw,4.5rem); font-weight: 600; line-height: 1; color: #e4d9c8; }
 .hdr h1 em { color: #6db87a; font-style: italic; }
-.hdr-sub { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: #4e8056; margin-top: 0.5rem; }
+.hdr-sub { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: #78b885; margin-top: 0.5rem; }
 .hdr-rule { width: 56px; height: 1px; background: linear-gradient(to right, transparent, #3a6040, transparent); margin: 1rem auto 0; }
 
-/* Location */
-#loc-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.65rem 1.3rem; border-radius: 100px; border: 1px solid rgba(109,184,122,0.4); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; color: #6db87a; background: none; margin: 0 auto 0.75rem; width: fit-content; }
+/* ── Location ── */
+#loc-btn { display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.65rem 1.3rem; border-radius: 100px; border: 1px solid rgba(109,184,122,0.4); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; color: #6db87a; background: none; margin: 0 auto 0.75rem; }
 #loc-btn.ok   { border-color: #6db87a; color: #8dd49a; background: rgba(109,184,122,0.1); }
 #loc-btn.deny { border-color: rgba(220,100,80,0.4); color: #e08878; }
-#loc-help { display: none; font-size: 0.75rem; color: #6a9070; text-align: center; margin-bottom: 1.5rem; line-height: 1.6; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.75rem 1rem; }
+#loc-help { display: none; font-size: 0.8rem; color: #9ab8a0; text-align: center; margin-bottom: 1.5rem; line-height: 1.6; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.75rem 1rem; }
 
-/* Date selector */
+/* ── Date selector ── */
 .date-scroll { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 1.75rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .date-scroll::-webkit-scrollbar { display: none; }
-.date-btn { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; padding: 0.6rem 0.9rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); cursor: pointer; font-family: 'DM Sans', sans-serif; color: #6a9070; transition: all 0.2s; min-width: 58px; }
+.date-btn { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; padding: 0.6rem 0.9rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); cursor: pointer; font-family: 'DM Sans', sans-serif; color: #8aaa90; transition: all 0.2s; min-width: 58px; }
 .date-btn .d-day  { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; }
 .date-btn .d-date { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; line-height: 1; color: #e4d9c8; }
 .date-btn.active  { background: rgba(109,184,122,0.12); border-color: rgba(109,184,122,0.4); }
 .date-btn.active .d-day { color: #6db87a; }
 
-.sec-lbl { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: #4e8056; margin-bottom: 0.9rem; font-weight: 600; }
+.sec-lbl { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: #78b885; margin-bottom: 0.9rem; font-weight: 600; }
 .mb175 { margin-bottom: 1.75rem; }
 .mb1   { margin-bottom: 1rem; }
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.6rem; }
 
+/* ── Slider cards ── */
 .scard { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 13px; padding: 1.1rem 1.25rem; }
-.scard-lbl { font-size: 0.78rem; color: #6a9070; margin-bottom: 0.15rem; }
-.scard-val { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: #e4d9c8; margin-bottom: 0.55rem; line-height: 1; }
-.scard-val small { font-size: 0.82rem; color: #6a9070; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+.scard-lbl { font-size: 0.78rem; color: #8aaa90; margin-bottom: 0.15rem; }
+.scard-val { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: #e4d9c8; margin-bottom: 0.7rem; line-height: 1; }
+.scard-val small { font-size: 0.82rem; color: #8aaa90; font-family: 'DM Sans', sans-serif; font-weight: 400; }
 
-input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 3px; border-radius: 2px; background: rgba(109,184,122,0.25); outline: none; }
-input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #6db87a; cursor: pointer; box-shadow: 0 0 0 4px rgba(109,184,122,0.2); }
+/* ── Custom Fancy Sliders ── */
+.cs-wrap { position: relative; height: 52px; display: flex; align-items: center; margin-top: 0.25rem; }
+.cs-track { position: absolute; left: 0; right: 0; height: 5px; background: rgba(109,184,122,0.15); border-radius: 3px; border: 1px solid rgba(109,184,122,0.1); }
+.cs-fill  { height: 100%; background: linear-gradient(to right, rgba(109,184,122,0.3), rgba(109,184,122,0.6)); border-radius: 3px; pointer-events: none; }
+.cs-thumb { position: absolute; top: 50%; transform: translate(-50%, -50%); pointer-events: none; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); z-index: 2; }
+.cs-input { position: absolute; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; margin: 0; z-index: 3; -webkit-appearance: none; }
 
-select { width: 100%; padding: 0.72rem 2.2rem 0.72rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; cursor: pointer; outline: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234e8056'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; }
+/* Car animations */
+@keyframes carBounce { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-3px)} 60%{transform:translateY(-1px)} }
+@keyframes wheelSpin  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.cs-thumb-car.moving { animation: carBounce 0.35s ease infinite; }
+.cs-thumb-car.moving .w1 { animation: wheelSpin 0.5s linear infinite; transform-origin: 8px 15px; transform-box: fill-box; }
+.cs-thumb-car.moving .w2 { animation: wheelSpin 0.5s linear infinite; transform-origin: 26px 15px; transform-box: fill-box; }
+
+/* Hiker walking */
+@keyframes legSwingF  { 0%,100%{transform:rotate(-14deg)} 50%{transform:rotate(14deg)} }
+@keyframes legSwingB  { 0%,100%{transform:rotate(14deg)}  50%{transform:rotate(-14deg)} }
+@keyframes armSwingF  { 0%,100%{transform:rotate(12deg)}  50%{transform:rotate(-12deg)} }
+@keyframes armSwingB  { 0%,100%{transform:rotate(-12deg)} 50%{transform:rotate(12deg)} }
+@keyframes hikerBob   { 0%,100%{transform:translate(-50%,-50%) translateY(0)} 50%{transform:translate(-50%,-50%) translateY(-2px)} }
+.cs-thumb-hiker.moving { animation: hikerBob 0.35s ease infinite; }
+.cs-thumb-hiker.moving .leg-l { animation: legSwingF 0.4s ease infinite; transform-origin: 50% 0%; transform-box: fill-box; }
+.cs-thumb-hiker.moving .leg-r { animation: legSwingB 0.4s ease infinite; transform-origin: 50% 0%; transform-box: fill-box; }
+.cs-thumb-hiker.moving .arm-l { animation: armSwingB 0.4s ease infinite; transform-origin: 50% 0%; transform-box: fill-box; }
+.cs-thumb-hiker.moving .arm-r { animation: armSwingF 0.4s ease infinite; transform-origin: 50% 0%; transform-box: fill-box; }
+
+/* Clock */
+@keyframes clockPulse { 0%,100%{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5))} 50%{filter:drop-shadow(0 2px 10px rgba(109,184,122,0.4))} }
+.cs-thumb-clock.moving { animation: clockPulse 0.4s ease infinite; }
+
+/* Elevation */
+@keyframes climbStep { 0%,100%{transform:translate(-50%,-50%) translateY(0)} 40%{transform:translate(-50%,-50%) translateY(-3px)} 70%{transform:translate(-50%,-50%) translateY(-1px)} }
+.cs-thumb-elev.moving { animation: climbStep 0.45s ease infinite; }
+
+/* ── Selects ── */
+select { width: 100%; padding: 0.72rem 2.2rem 0.72rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; cursor: pointer; outline: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2378b885'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; }
 select option { background: #182e1e; color: #e4d9c8; }
-.sel-wrap label { font-size: 0.78rem; color: #6a9070; display: block; margin-bottom: 0.45rem; }
+.sel-wrap label { font-size: 0.78rem; color: #8aaa90; display: block; margin-bottom: 0.45rem; }
 
+/* ── Toggles ── */
 .toggle { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; padding: 1rem 0.5rem; border-radius: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); transition: all 0.2s; text-align: center; user-select: none; }
 .toggle.on { background: rgba(109,184,122,0.12); border-color: rgba(109,184,122,0.4); }
 .toggle-ico { font-size: 1.5rem; }
-.toggle-lbl { font-size: 0.7rem; color: #6a9070; }
+.toggle-lbl { font-size: 0.7rem; color: #8aaa90; }
 .toggle.on .toggle-lbl { color: #8dd49a; }
 
-#search-btn { width: 100%; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg,#3d7a4a,#2b5e38); color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
+/* ── Search button ── */
+#search-btn { width: 100%; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg,#3d7a4a,#2b5e38); color: #e4d9c8; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: transform 0.1s, box-shadow 0.2s; }
+#search-btn:hover { box-shadow: 0 4px 16px rgba(60,120,75,0.4); }
+#search-btn:active { transform: scale(0.98); }
 
-/* Loading */
-#loading { display: none; text-align: center; padding: 5rem 1rem; }
-.spinner { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(109,184,122,0.12); border-top-color: #6db87a; animation: spin 0.9s linear infinite; margin: 0 auto 1.5rem; }
-@keyframes spin { to { transform: rotate(360deg); } }
-#loading h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; margin-bottom: 0.4rem; color: #e4d9c8; }
-#loading p { font-size: 0.85rem; color: #4e8056; }
-.loading-steps { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
-.loading-step { font-size: 0.78rem; color: #3a6040; }
+/* ── View panels with fade transition ── */
+.view-panel { opacity: 1; transition: opacity 0.25s ease; }
+.view-panel.fading { opacity: 0; pointer-events: none; }
+.view-panel.hidden { display: none !important; }
 
-/* Results */
-#results { display: none; }
-.back-btn { display: flex; align-items: center; gap: 0.5rem; background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #6a9070; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; }
+/* ── Skeleton loading ── */
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+.sk { border-radius: 6px; background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(109,184,122,0.08) 50%, rgba(255,255,255,0.04) 75%); background-size: 200% 100%; animation: shimmer 1.6s ease infinite; }
+.sk-weather { display: flex; gap: 1.2rem; align-items: center; background: rgba(109,184,122,0.04); border: 1px solid rgba(109,184,122,0.1); border-radius: 14px; padding: 1.2rem 1.5rem; margin-bottom: 1.75rem; }
+.sk-temp { width: 64px; height: 56px; border-radius: 8px; flex-shrink: 0; }
+.sk-weather-lines { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.sk-line-sm  { height: 10px; width: 40%; }
+.sk-line-md  { height: 14px; width: 65%; }
+.sk-line-lg  { height: 11px; width: 80%; }
+.sk-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.1rem 1.25rem; margin-bottom: 0.85rem; }
+.sk-card-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.sk-card-main { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.sk-title  { height: 22px; width: 70%; border-radius: 4px; }
+.sk-loc    { height: 11px; width: 45%; }
+.sk-stats  { height: 11px; width: 90%; margin-top: 0.3rem; }
+.sk-badge  { width: 60px; height: 22px; border-radius: 100px; flex-shrink: 0; }
+.sk-label  { height: 11px; width: 55%; margin-bottom: 0.75rem; }
 
-/* Weather panel */
+/* ── Loading header ── */
+#loading-header { text-align: center; padding: 1.5rem 0 1.25rem; }
+#loading-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: #e4d9c8; margin-bottom: 0.3rem; }
+#loading-header p  { font-size: 0.82rem; color: #78b885; }
+.loading-dot { display: inline-block; animation: dotPulse 1.4s ease infinite; }
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse { 0%,80%,100%{opacity:0.3} 40%{opacity:1} }
+
+/* ── Results ── */
+.back-btn { display: flex; align-items: center; gap: 0.5rem; background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; color: #8aaa90; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; padding: 0.5rem 1rem; margin-bottom: 1.5rem; transition: border-color 0.2s, color 0.2s; }
+.back-btn:hover { border-color: rgba(109,184,122,0.4); color: #6db87a; }
+
+/* ── Weather panel ── */
 .weather { display: flex; gap: 1.4rem; align-items: center; background: rgba(109,184,122,0.07); border: 1px solid rgba(109,184,122,0.15); border-radius: 14px; padding: 1.2rem 1.5rem; margin-bottom: 1.75rem; }
 .weather-temp { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: #6db87a; line-height: 1; white-space: nowrap; }
+.weather-date { font-size: 0.7rem; color: #78b885; margin-bottom: 0.15rem; letter-spacing: 0.05em; text-transform: uppercase; }
 .weather-cond { font-size: 0.95rem; font-weight: 500; color: #e4d9c8; margin-bottom: 0.2rem; }
-.weather-date { font-size: 0.7rem; color: #4e8056; margin-bottom: 0.15rem; letter-spacing: 0.05em; text-transform: uppercase; }
-.weather-adv  { font-size: 0.8rem; color: #6a9070; }
+.weather-adv  { font-size: 0.8rem; color: #8aaa90; }
 
-/* Hike cards — collapsed/expanded */
-.hcard { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; margin-bottom: 0.85rem; overflow: hidden; transition: border-color 0.2s; }
-.hcard-summary { padding: 1.1rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: 1rem; }
+/* ── Hike cards — staggered entrance ── */
+@keyframes slideUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.hcard { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; margin-bottom: 0.85rem; overflow: hidden; opacity: 0; animation: slideUp 0.4s ease forwards; }
+.hcard:nth-child(1) { animation-delay: 0.05s; }
+.hcard:nth-child(2) { animation-delay: 0.18s; }
+.hcard:nth-child(3) { animation-delay: 0.31s; }
+
+.hcard-summary { padding: 1.1rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: 1rem; border-radius: 16px; }
+.hcard-summary:hover { background: rgba(255,255,255,0.02); }
 .hcard-summary-main { flex: 1; min-width: 0; }
 .hcard-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; line-height: 1.2; color: #e4d9c8; }
-.hcard-loc  { font-size: 0.75rem; color: #4e8056; margin-top: 0.15rem; }
-.hcard-quick { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.55rem; align-items: center; }
+.hcard-loc  { font-size: 0.75rem; color: #78b885; margin-top: 0.15rem; }
+.hcard-quick { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.55rem; }
 .hcard-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0; }
-.expand-icon { font-size: 0.75rem; color: #3a6040; transition: transform 0.25s; }
+.expand-icon { font-size: 0.75rem; color: #4a7050; transition: transform 0.25s; display: block; }
 .hcard.open .expand-icon { transform: rotate(180deg); }
-
 .hcard-detail { display: none; padding: 0 1.25rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); }
 .hcard.open .hcard-detail { display: block; }
 .hcard-photo { width: 100%; height: 170px; object-fit: cover; border-radius: 10px; margin: 1rem 0 0.85rem; display: block; background: rgba(255,255,255,0.04); }
 
-/* Badges */
+/* ── Badges ── */
 .badge { padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.66rem; font-weight: 600; white-space: nowrap; }
 .b-easy { background: rgba(100,200,120,0.14); color: #7dd492; }
 .b-mod  { background: rgba(200,170,80,0.14);  color: #d4b86a; }
@@ -116,46 +192,55 @@ select option { background: #182e1e; color: #e4d9c8; }
 .s-good { background: rgba(80,180,200,0.14);  color: #70c8d4; }
 .s-fair { background: rgba(200,170,80,0.14);  color: #d4b86a; }
 .s-poor { background: rgba(220,80,60,0.14);   color: #e07060; }
-
 .qstat { font-size: 0.72rem; color: #8aaa90; }
 .qstat strong { color: #c8dccb; }
 
-.desc { font-size: 0.855rem; line-height: 1.65; color: #aec4b2; margin-bottom: 0.85rem; }
+.desc { font-size: 0.855rem; line-height: 1.65; color: #b8ccbc; margin-bottom: 0.85rem; }
 .highlights { list-style: none; margin-bottom: 0.85rem; }
 .highlights li { font-size: 0.78rem; color: #8aaa90; padding: 0.18rem 0; display: flex; align-items: center; gap: 0.5rem; }
 .highlights li::before { content: '◆'; font-size: 0.38rem; color: #5db86a; flex-shrink: 0; }
-
 .hcard-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-top: 1px solid rgba(255,255,255,0.05); gap: 0.5rem; margin-bottom: 0.6rem; }
 .facilities { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.fac { font-size: 0.68rem; color: #6a9070; padding: 0.18rem 0.5rem; background: rgba(255,255,255,0.04); border-radius: 6px; }
-
-.weather-note { font-size: 0.73rem; color: #4a6e52; margin-bottom: 0.4rem; }
-.why { font-size: 0.74rem; color: #4e8056; font-style: italic; margin-bottom: 0.7rem; }
+.fac { font-size: 0.68rem; color: #8aaa90; padding: 0.18rem 0.5rem; background: rgba(255,255,255,0.04); border-radius: 6px; }
+.weather-note { font-size: 0.73rem; color: #6aaa78; margin-bottom: 0.4rem; }
+.why { font-size: 0.74rem; color: #78b885; font-style: italic; margin-bottom: 0.7rem; }
 
 .busy-bar { margin-bottom: 0.85rem; padding: 0.7rem 0.9rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; }
 .busy-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.3rem; }
-.busy-lbl { font-size: 0.7rem; color: #6a9070; }
+.busy-lbl { font-size: 0.7rem; color: #8aaa90; }
 .busy-val { font-size: 0.7rem; font-weight: 600; }
-.busy-quiet { color: #7dd492; } .busy-mod { color: #d4b86a; } .busy-busy { color: #e09060; } .busy-vbusy { color: #e07060; }
+.busy-quiet{color:#7dd492} .busy-mod{color:#d4b86a} .busy-busy{color:#e09060} .busy-vbusy{color:#e07060}
 .busy-dots { display: flex; gap: 4px; margin-top: 0.28rem; }
 .busy-dot { width: 28px; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.08); }
-.busy-dot.on-quiet { background: #7dd492; } .busy-dot.on-mod { background: #d4b86a; } .busy-dot.on-busy { background: #e09060; } .busy-dot.on-vbusy { background: #e07060; }
-.busy-note { font-size: 0.7rem; color: #4e8056; margin-top: 0.35rem; font-style: italic; }
+.busy-dot.on-quiet{background:#7dd492} .busy-dot.on-mod{background:#d4b86a} .busy-dot.on-busy{background:#e09060} .busy-dot.on-vbusy{background:#e07060}
+.busy-note { font-size: 0.7rem; color: #78b885; margin-top: 0.35rem; font-style: italic; }
 
 .hcard-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.hlink { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.73rem; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; cursor: pointer; border: none; }
-.hlink-dir   { background: rgba(52,168,83,0.12);  color: #6db87a; border: 1px solid rgba(52,168,83,0.25); }
+.hlink { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.73rem; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; cursor: pointer; border: none; transition: filter 0.15s; }
+.hlink:hover { filter: brightness(1.15); }
+.hlink-dir   { background: rgba(52,168,83,0.12); color: #6db87a; border: 1px solid rgba(52,168,83,0.25); }
 .hlink-web   { background: rgba(109,184,122,0.1); color: #7dd492; border: 1px solid rgba(109,184,122,0.25); }
-.hlink-share { background: rgba(255,255,255,0.05); color: #aec4b2; border: 1px solid rgba(255,255,255,0.1); }
+.hlink-share { background: rgba(255,255,255,0.05); color: #b8ccbc; border: 1px solid rgba(255,255,255,0.1); }
 
 .err { background: rgba(220,80,60,0.09); border: 1px solid rgba(220,80,60,0.2); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.83rem; color: #e08070; margin-bottom: 1rem; display: none; }
 
-/* Install banner */
+/* ── Toasts ── */
+#toast-container { position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; pointer-events: none; }
+.toast { background: #1e3d28; border: 1px solid rgba(109,184,122,0.3); border-radius: 100px; padding: 0.5rem 1.1rem; font-size: 0.82rem; color: #e4d9c8; white-space: nowrap; opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.toast-error { background: #3d1e1e; border-color: rgba(220,80,60,0.3); }
+
+/* ── Install banner ── */
 #hs-banner { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: #132b1a; border-top: 1px solid rgba(109,184,122,0.25); padding: 0.9rem 1.25rem; align-items: center; gap: 1rem; }
 #hs-banner.show { display: flex; }
 #hs-banner p { font-size: 0.8rem; color: #8aaa90; line-height: 1.5; flex: 1; }
 #hs-banner strong { color: #e4d9c8; }
-#hs-close { background: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #4e8056; font-size: 0.8rem; cursor: pointer; padding: 0.3rem 0.7rem; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+#hs-close { background: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #78b885; font-size: 0.8rem; cursor: pointer; padding: 0.3rem 0.7rem; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+
+/* ── Reduced motion — respect user preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
 
 @media (max-width: 480px) {
   .g2 { grid-template-columns: 1fr; }
@@ -167,73 +252,171 @@ select option { background: #182e1e; color: #e4d9c8; }
   </style>
 </head>
 <body>
+  <!-- Skip link for keyboard / screen reader users -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Screen reader announcements -->
+
+  <div id="sr-announce" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Toast container -->
+
+  <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
   <div class="bg-glow"></div>
+
+  <main id="main">
   <div class="wrap">
 
 ```
 <header class="hdr">
   <h1><em>Cosán</em></h1>
   <p class="hdr-sub">Ireland Trail Finder</p>
-  <div class="hdr-rule"></div>
+  <div class="hdr-rule" role="presentation"></div>
 </header>
 
-<div id="form">
-  <div id="err-box" class="err"></div>
-  <button id="loc-btn">📍 Share my location</button>
-  <div id="loc-help"></div>
+<!-- FORM -->
+<div id="form" class="view-panel" role="region" aria-label="Trail search filters">
+  <div id="err-box" class="err" role="alert"></div>
 
-  <!-- Date selector -->
+  <button id="loc-btn" aria-label="Share your location to find nearby trails">📍 Share my location</button>
+  <div id="loc-help" role="status"></div>
+
+  <!-- Date -->
   <div class="mb175">
-    <p class="sec-lbl">When are you hiking?</p>
-    <div class="date-scroll" id="date-scroll"></div>
+    <p class="sec-lbl" id="date-label">When are you hiking?</p>
+    <div class="date-scroll" id="date-scroll" role="group" aria-labelledby="date-label"></div>
   </div>
 
+  <!-- Travel -->
   <div class="mb175">
     <p class="sec-lbl">How far will you travel?</p>
     <div class="scard">
-      <p class="scard-lbl">Maximum travel distance</p>
-      <p class="scard-val"><span id="travelVal">60</span> <small>km from you</small></p>
-      <input type="range" id="travelKm" min="10" max="200" step="5" value="60">
+      <p class="scard-lbl" id="travel-lbl">Maximum travel distance</p>
+      <p class="scard-val" aria-hidden="true"><span id="travelVal">60</span> <small>km from you</small></p>
+      <div class="cs-wrap">
+        <div class="cs-track" aria-hidden="true"><div class="cs-fill" id="fill-travelKm"></div></div>
+        <div class="cs-thumb cs-thumb-car" id="thumb-travelKm" aria-hidden="true">
+          <svg viewBox="0 0 38 22" width="46" height="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle class="w1" cx="9" cy="17" r="4.5" fill="#1a3020" stroke="#6db87a" stroke-width="1"/>
+            <circle cx="9" cy="17" r="2" fill="#4a8056"/>
+            <circle class="w2" cx="29" cy="17" r="4.5" fill="#1a3020" stroke="#6db87a" stroke-width="1"/>
+            <circle cx="29" cy="17" r="2" fill="#4a8056"/>
+            <rect x="2" y="9" width="34" height="9" rx="3" fill="#2d6040"/>
+            <path d="M9 9 L13 3 L25 3 L29 9 Z" fill="#3a7050"/>
+            <path d="M13 8.5 L15.5 4 L22.5 4 L25 8.5 Z" fill="rgba(150,220,170,0.35)"/>
+            <rect x="2" y="11" width="2.5" height="3" rx="0.8" fill="#e8d840" opacity="0.9"/>
+            <rect x="33.5" y="11" width="2.5" height="3" rx="0.8" fill="#e06060" opacity="0.9"/>
+          </svg>
+        </div>
+        <input type="range" class="cs-input" id="travelKm" min="10" max="200" step="5" value="60"
+          aria-labelledby="travel-lbl" aria-valuemin="10" aria-valuemax="200" aria-valuenow="60" aria-valuetext="60 kilometres">
+      </div>
     </div>
   </div>
 
+  <!-- Duration -->
   <div class="mb175">
     <p class="sec-lbl">How long do you want to hike?</p>
     <div class="g2">
       <div class="scard">
-        <p class="scard-lbl">Minimum duration</p>
-        <p class="scard-val"><span id="minDurVal">1</span> <small>hr</small></p>
-        <input type="range" id="minDurHrs" min="0.5" max="6" step="0.5" value="1">
+        <p class="scard-lbl" id="mindur-lbl">Minimum duration</p>
+        <p class="scard-val" aria-hidden="true"><span id="minDurVal">1</span> <small>hr</small></p>
+        <div class="cs-wrap">
+          <div class="cs-track" aria-hidden="true"><div class="cs-fill" id="fill-minDurHrs"></div></div>
+          <div class="cs-thumb cs-thumb-clock" id="thumb-minDurHrs" aria-hidden="true">
+            <svg viewBox="0 0 34 34" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="17" cy="17" r="15" fill="#1a3020" stroke="#6db87a" stroke-width="1.5"/>
+              <line x1="17" y1="17" x2="17" y2="6"  stroke="#e4d9c8" stroke-width="2.2" stroke-linecap="round" id="clock-hour-min"/>
+              <line x1="17" y1="17" x2="17" y2="4"  stroke="#6db87a" stroke-width="1.5" stroke-linecap="round" id="clock-min-min"/>
+              <circle cx="17" cy="17" r="2" fill="#6db87a"/>
+              <line x1="17" y1="2.5" x2="17" y2="4.5" stroke="#3d6045" stroke-width="1.2"/>
+              <line x1="17" y1="29.5" x2="17" y2="31.5" stroke="#3d6045" stroke-width="1.2"/>
+              <line x1="2.5" y1="17" x2="4.5" y2="17" stroke="#3d6045" stroke-width="1.2"/>
+              <line x1="29.5" y1="17" x2="31.5" y2="17" stroke="#3d6045" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <input type="range" class="cs-input" id="minDurHrs" min="0.5" max="6" step="0.5" value="1"
+            aria-labelledby="mindur-lbl" aria-valuemin="0.5" aria-valuemax="6" aria-valuenow="1" aria-valuetext="1 hour">
+        </div>
       </div>
       <div class="scard">
-        <p class="scard-lbl">Maximum duration</p>
-        <p class="scard-val"><span id="maxDurVal">4</span> <small>hrs</small></p>
-        <input type="range" id="maxDurHrs" min="1" max="12" step="0.5" value="4">
+        <p class="scard-lbl" id="maxdur-lbl">Maximum duration</p>
+        <p class="scard-val" aria-hidden="true"><span id="maxDurVal">4</span> <small>hrs</small></p>
+        <div class="cs-wrap">
+          <div class="cs-track" aria-hidden="true"><div class="cs-fill" id="fill-maxDurHrs"></div></div>
+          <div class="cs-thumb cs-thumb-clock" id="thumb-maxDurHrs" aria-hidden="true">
+            <svg viewBox="0 0 34 34" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="17" cy="17" r="15" fill="#1a3020" stroke="#6db87a" stroke-width="1.5"/>
+              <line x1="17" y1="17" x2="17" y2="6"  stroke="#e4d9c8" stroke-width="2.2" stroke-linecap="round" id="clock-hour-max"/>
+              <line x1="17" y1="17" x2="17" y2="4"  stroke="#6db87a" stroke-width="1.5" stroke-linecap="round" id="clock-min-max"/>
+              <circle cx="17" cy="17" r="2" fill="#6db87a"/>
+              <line x1="17" y1="2.5" x2="17" y2="4.5" stroke="#3d6045" stroke-width="1.2"/>
+              <line x1="17" y1="29.5" x2="17" y2="31.5" stroke="#3d6045" stroke-width="1.2"/>
+              <line x1="2.5" y1="17" x2="4.5" y2="17" stroke="#3d6045" stroke-width="1.2"/>
+              <line x1="29.5" y1="17" x2="31.5" y2="17" stroke="#3d6045" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <input type="range" class="cs-input" id="maxDurHrs" min="1" max="12" step="0.5" value="4"
+            aria-labelledby="maxdur-lbl" aria-valuemin="1" aria-valuemax="12" aria-valuenow="4" aria-valuetext="4 hours">
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Distance -->
   <div class="mb175">
     <p class="sec-lbl">Trail distance preference</p>
     <div class="g2">
       <div class="scard">
-        <p class="scard-lbl">Minimum distance</p>
-        <p class="scard-val"><span id="minDistVal">4</span> <small>km</small></p>
-        <input type="range" id="minDistKm" min="1" max="25" step="1" value="4">
+        <p class="scard-lbl" id="mindist-lbl">Minimum distance</p>
+        <p class="scard-val" aria-hidden="true"><span id="minDistVal">4</span> <small>km</small></p>
+        <div class="cs-wrap">
+          <div class="cs-track" aria-hidden="true"><div class="cs-fill" id="fill-minDistKm"></div></div>
+          <div class="cs-thumb cs-thumb-hiker" id="thumb-minDistKm" aria-hidden="true">
+            <svg viewBox="0 0 24 36" width="22" height="34" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="4.5" r="3.5" fill="none" stroke="#6db87a" stroke-width="1.6"/>
+              <line x1="12" y1="8" x2="12" y2="20" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="arm-l" x1="12" y1="12" x2="5"  y2="17" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="arm-r" x1="12" y1="12" x2="19" y2="16" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="leg-l" x1="12" y1="20" x2="7"  y2="31" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="leg-r" x1="12" y1="20" x2="17" y2="30" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="19" y1="14" x2="22" y2="31" stroke="#4a7050" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <input type="range" class="cs-input" id="minDistKm" min="1" max="25" step="1" value="4"
+            aria-labelledby="mindist-lbl" aria-valuemin="1" aria-valuemax="25" aria-valuenow="4" aria-valuetext="4 kilometres">
+        </div>
       </div>
       <div class="scard">
-        <p class="scard-lbl">Maximum distance</p>
-        <p class="scard-val"><span id="maxDistVal">14</span> <small>km</small></p>
-        <input type="range" id="maxDistKm" min="2" max="40" step="1" value="14">
+        <p class="scard-lbl" id="maxdist-lbl">Maximum distance</p>
+        <p class="scard-val" aria-hidden="true"><span id="maxDistVal">14</span> <small>km</small></p>
+        <div class="cs-wrap">
+          <div class="cs-track" aria-hidden="true"><div class="cs-fill" id="fill-maxDistKm"></div></div>
+          <div class="cs-thumb cs-thumb-hiker" id="thumb-maxDistKm" aria-hidden="true">
+            <svg viewBox="0 0 24 36" width="22" height="34" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="4.5" r="3.5" fill="none" stroke="#6db87a" stroke-width="1.6"/>
+              <line x1="12" y1="8" x2="12" y2="20" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="arm-l" x1="12" y1="12" x2="5"  y2="17" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="arm-r" x1="12" y1="12" x2="19" y2="16" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="leg-l" x1="12" y1="20" x2="7"  y2="31" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line class="leg-r" x1="12" y1="20" x2="17" y2="30" stroke="#6db87a" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="19" y1="14" x2="22" y2="31" stroke="#4a7050" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <input type="range" class="cs-input" id="maxDistKm" min="2" max="40" step="1" value="14"
+            aria-labelledby="maxdist-lbl" aria-valuemin="2" aria-valuemax="40" aria-valuenow="14" aria-valuetext="14 kilometres">
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Difficulty & Elevation -->
   <div class="mb175">
     <p class="sec-lbl">Difficulty & elevation</p>
     <div class="g2">
       <div class="sel-wrap">
-        <label>Difficulty level</label>
+        <label for="difficulty">Difficulty level</label>
         <select id="difficulty">
           <option value="any">Any difficulty</option>
           <option value="Easy">Easy</option>
@@ -243,7 +426,7 @@ select option { background: #182e1e; color: #e4d9c8; }
         </select>
       </div>
       <div class="sel-wrap">
-        <label>Elevation gain</label>
+        <label for="elevation">Elevation gain</label>
         <select id="elevation">
           <option value="any">No preference</option>
           <option value="low">Low (under 300 m)</option>
@@ -254,128 +437,291 @@ select option { background: #182e1e; color: #e4d9c8; }
     </div>
   </div>
 
+  <!-- Facilities -->
   <div class="mb175">
-    <p class="sec-lbl">Facilities & preferences</p>
-    <div class="g4">
-      <div class="toggle" id="tog-carPark"><span class="toggle-ico">🅿️</span><span class="toggle-lbl">Car Park</span></div>
-      <div class="toggle" id="tog-toilet"><span class="toggle-ico">🚻</span><span class="toggle-lbl">Toilets</span></div>
-      <div class="toggle" id="tog-food"><span class="toggle-ico">🍺</span><span class="toggle-lbl">Food nearby</span></div>
-      <div class="toggle" id="tog-child"><span class="toggle-ico">👶</span><span class="toggle-lbl">Child Friendly</span></div>
+    <p class="sec-lbl" id="fac-label">Facilities & preferences</p>
+    <div class="g4" role="group" aria-labelledby="fac-label">
+      <div class="toggle" id="tog-carPark" role="button" tabindex="0" aria-pressed="false" aria-label="Car park required">
+        <span class="toggle-ico" aria-hidden="true">🅿️</span><span class="toggle-lbl">Car Park</span>
+      </div>
+      <div class="toggle" id="tog-toilet" role="button" tabindex="0" aria-pressed="false" aria-label="Toilets required">
+        <span class="toggle-ico" aria-hidden="true">🚻</span><span class="toggle-lbl">Toilets</span>
+      </div>
+      <div class="toggle" id="tog-food" role="button" tabindex="0" aria-pressed="false" aria-label="Food nearby required">
+        <span class="toggle-ico" aria-hidden="true">🍺</span><span class="toggle-lbl">Food nearby</span>
+      </div>
+      <div class="toggle" id="tog-child" role="button" tabindex="0" aria-pressed="false" aria-label="Child friendly trails only">
+        <span class="toggle-ico" aria-hidden="true">👶</span><span class="toggle-lbl">Child Friendly</span>
+      </div>
     </div>
   </div>
 
-  <button id="search-btn">Find my perfect hike →</button>
+  <button id="search-btn" aria-label="Find hiking trails matching my criteria">Find my perfect hike →</button>
 </div>
 
-<div id="loading">
-  <div class="spinner"></div>
-  <h2>Searching the trails…</h2>
-  <p>Checking weather & finding your perfect hike in Ireland</p>
-  <div class="loading-steps">
-    <p class="loading-step">🌤 Fetching weather for your chosen date</p>
-    <p class="loading-step">🗺 Scanning trail databases</p>
-    <p class="loading-step">✨ Ranking by suitability</p>
+<!-- LOADING -->
+<div id="loading" class="view-panel hidden" role="region" aria-label="Loading trail recommendations" aria-busy="true">
+  <div id="loading-header">
+    <h2>Searching the trails<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></h2>
+    <p>Checking weather & finding your perfect hike</p>
+  </div>
+  <!-- Skeleton weather -->
+  <div class="sk-weather" aria-hidden="true">
+    <div class="sk sk-temp"></div>
+    <div class="sk-weather-lines">
+      <div class="sk sk-line-sm"></div>
+      <div class="sk sk-line-md"></div>
+      <div class="sk sk-line-lg"></div>
+    </div>
+  </div>
+  <!-- Skeleton cards x3 -->
+  <div class="sk sk-label" aria-hidden="true"></div>
+  <div class="sk-card" aria-hidden="true">
+    <div class="sk-card-row">
+      <div class="sk-card-main">
+        <div class="sk sk-title"></div>
+        <div class="sk sk-loc" style="margin-top:0.4rem"></div>
+        <div class="sk sk-stats" style="margin-top:0.5rem"></div>
+      </div>
+      <div class="sk sk-badge"></div>
+    </div>
+  </div>
+  <div class="sk-card" aria-hidden="true" style="opacity:0.7">
+    <div class="sk-card-row">
+      <div class="sk-card-main">
+        <div class="sk sk-title"></div>
+        <div class="sk sk-loc" style="margin-top:0.4rem"></div>
+        <div class="sk sk-stats" style="margin-top:0.5rem"></div>
+      </div>
+      <div class="sk sk-badge"></div>
+    </div>
+  </div>
+  <div class="sk-card" aria-hidden="true" style="opacity:0.45">
+    <div class="sk-card-row">
+      <div class="sk-card-main">
+        <div class="sk sk-title"></div>
+        <div class="sk sk-loc" style="margin-top:0.4rem"></div>
+        <div class="sk sk-stats" style="margin-top:0.5rem"></div>
+      </div>
+      <div class="sk sk-badge"></div>
+    </div>
   </div>
 </div>
 
-<div id="results">
-  <button class="back-btn" id="back-btn">← New search</button>
+<!-- RESULTS -->
+<div id="results" class="view-panel hidden" role="region" aria-label="Trail recommendations">
+  <button class="back-btn" id="back-btn" aria-label="Start a new search">← New search</button>
   <div id="results-inner"></div>
 </div>
 ```
 
   </div>
+  </main>
 
-  <div id="hs-banner">
+  <div id="hs-banner" role="complementary" aria-label="Install app">
     <p>📲 <strong>Install Cosán:</strong> Tap <strong>Share ⬆</strong> in Safari then <strong>"Add to Home Screen"</strong></p>
-    <button id="hs-close">Dismiss</button>
+    <button id="hs-close" aria-label="Dismiss install prompt">Dismiss</button>
   </div>
 
   <script>
     // ── State ──
-    var userLat = null, userLng = null;
-    var selectedDate = null;
+    var userLat = null, userLng = null, selectedDate = null;
     var tog = { carPark: false, toilet: false, food: false, child: false };
     var hikeStore = [];
-
-    // ── Date selector ──
-    var dateScroll = document.getElementById('date-scroll');
-    var dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var dayNames   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+    // ── Toast ──
+    function showToast(msg, type) {
+      var tc = document.getElementById('toast-container');
+      var t = document.createElement('div');
+      t.className = 'toast' + (type === 'error' ? ' toast-error' : '');
+      t.textContent = msg;
+      tc.appendChild(t);
+      requestAnimationFrame(function() { requestAnimationFrame(function() { t.classList.add('show'); }); });
+      setTimeout(function() { t.classList.remove('show'); setTimeout(function() { t.remove(); }, 300); }, 3000);
+    }
+
+    // ── Haptic ──
+    function haptic(ms) { if (navigator.vibrate) navigator.vibrate(ms || 10); }
+
+    // ── Screen reader announce ──
+    function announce(msg) {
+      var el = document.getElementById('sr-announce');
+      el.textContent = '';
+      setTimeout(function() { el.textContent = msg; }, 50);
+    }
+
+    // ── View transitions ──
+    var currentView = 'form';
+    function showView(name) {
+      if (currentView === name) return;
+      var oldEl = document.getElementById(currentView);
+      var newEl = document.getElementById(name);
+      oldEl.classList.add('fading');
+      setTimeout(function() {
+        oldEl.classList.add('hidden');
+        oldEl.classList.remove('fading');
+        newEl.classList.remove('hidden');
+        newEl.style.opacity = '0';
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            newEl.style.opacity = '';
+          });
+        });
+        currentView = name;
+        if (name === 'loading') document.getElementById('loading').setAttribute('aria-busy','true');
+        if (name === 'results') document.getElementById('loading').removeAttribute('aria-busy');
+      }, 240);
+    }
+
+    document.getElementById('back-btn').addEventListener('click', function() {
+      haptic(10);
+      showView('form');
+    });
+
+    // ── Fancy Sliders ──
+    function pct(el) { return (parseFloat(el.value) - parseFloat(el.min)) / (parseFloat(el.max) - parseFloat(el.min)); }
+
+    function updateSlider(id, animate) {
+      var input = document.getElementById(id);
+      var fill  = document.getElementById('fill-' + id);
+      var thumb = document.getElementById('thumb-' + id);
+      if (!input || !fill || !thumb) return;
+      var p = pct(input);
+      fill.style.width = (p * 100) + '%';
+      thumb.style.left = (p * 100) + '%';
+      // Update ARIA valuetext
+      var val = parseFloat(input.value);
+      var unit = id.indexOf('Hrs') > -1 ? (val === 1 ? 'hour' : 'hours') : 'kilometres';
+      input.setAttribute('aria-valuenow', val);
+      input.setAttribute('aria-valuetext', val + ' ' + unit);
+      // Clock hands
+      if (id === 'minDurHrs' || id === 'maxDurHrs') {
+        var hours = val;
+        var minDeg  = (hours % 1) * 360;
+        var hourDeg = (hours / 12) * 360;
+        var sfx = id === 'minDurHrs' ? '-min' : '-max';
+        var hEl = document.getElementById('clock-hour' + sfx);
+        var mEl = document.getElementById('clock-min'  + sfx);
+        if (hEl) hEl.setAttribute('transform', 'rotate(' + hourDeg + ' 17 17)');
+        if (mEl) mEl.setAttribute('transform', 'rotate(' + minDeg  + ' 17 17)');
+      }
+      if (animate) {
+        thumb.classList.add('moving');
+        clearTimeout(thumb._t);
+        thumb._t = setTimeout(function() { thumb.classList.remove('moving'); }, 500);
+      }
+    }
+
+    var sliderMap = {
+      travelKm:  { valId: 'travelVal',  unit: 'km' },
+      minDurHrs: { valId: 'minDurVal',  unit: 'hr' },
+      maxDurHrs: { valId: 'maxDurVal',  unit: 'hrs' },
+      minDistKm: { valId: 'minDistVal', unit: 'km' },
+      maxDistKm: { valId: 'maxDistVal', unit: 'km' }
+    };
+
+    Object.keys(sliderMap).forEach(function(id) {
+      var input = document.getElementById(id);
+      var vl    = document.getElementById(sliderMap[id].valId);
+      input.addEventListener('input', function() {
+        vl.textContent = input.value;
+        updateSlider(id, true);
+      });
+      updateSlider(id, false);
+    });
+
+    window.addEventListener('resize', function() {
+      Object.keys(sliderMap).forEach(function(id) { updateSlider(id, false); });
+    });
+
+    // ── Toggles (keyboard + mouse + ARIA) ──
+    ['carPark','toilet','food','child'].forEach(function(k) {
+      var el = document.getElementById('tog-' + k);
+      function activate() {
+        haptic(10);
+        tog[k] = !tog[k];
+        el.classList.toggle('on', tog[k]);
+        el.setAttribute('aria-pressed', tog[k] ? 'true' : 'false');
+      }
+      el.addEventListener('click', activate);
+      el.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+      });
+    });
+
+    // ── Date buttons ──
+    var dateScroll = document.getElementById('date-scroll');
     function buildDateButtons() {
       dateScroll.innerHTML = '';
       var now = new Date();
       for (var i = 0; i <= 7; i++) {
-        var d = new Date(now);
-        d.setDate(now.getDate() + i);
-        (function(date, index) {
+        (function(index) {
+          var d = new Date(now);
+          d.setDate(now.getDate() + index);
           var btn = document.createElement('div');
           btn.className = 'date-btn' + (index === 0 ? ' active' : '');
-          var dayLabel = index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : dayNames[date.getDay()];
-          btn.innerHTML = '<span class="d-day">' + dayLabel + '</span><span class="d-date">' + date.getDate() + '</span><span class="d-day">' + monthNames[date.getMonth()] + '</span>';
-          btn.addEventListener('click', function() {
-            document.querySelectorAll('.date-btn').forEach(function(b) { b.classList.remove('active'); });
+          var dayLabel = index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : dayNames[d.getDay()];
+          var fullLabel = dayLabel + ' ' + d.getDate() + ' ' + monthNames[d.getMonth()];
+          btn.setAttribute('role', 'button');
+          btn.setAttribute('tabindex', '0');
+          btn.setAttribute('aria-label', 'Hike on ' + fullLabel);
+          btn.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+          btn.innerHTML = '<span class="d-day">' + dayLabel + '</span><span class="d-date">' + d.getDate() + '</span><span class="d-day">' + monthNames[d.getMonth()] + '</span>';
+          function selectDate() {
+            haptic(8);
+            document.querySelectorAll('.date-btn').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
             btn.classList.add('active');
-            selectedDate = date;
-          });
-          if (index === 0) selectedDate = date;
+            btn.setAttribute('aria-pressed', 'true');
+            selectedDate = d;
+          }
+          btn.addEventListener('click', selectDate);
+          btn.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectDate(); } });
+          if (index === 0) selectedDate = d;
           dateScroll.appendChild(btn);
-        })(d, i);
+        })(i);
       }
     }
     buildDateButtons();
-
-    // ── Sliders ──
-    [['travelKm','travelVal'],['minDurHrs','minDurVal'],['maxDurHrs','maxDurVal'],['minDistKm','minDistVal'],['maxDistKm','maxDistVal']].forEach(function(pair) {
-      var el = document.getElementById(pair[0]);
-      var vl = document.getElementById(pair[1]);
-      el.addEventListener('input', function() { vl.textContent = el.value; });
-    });
-
-    // ── Toggles ──
-    ['carPark','toilet','food','child'].forEach(function(k) {
-      document.getElementById('tog-' + k).addEventListener('click', function() {
-        tog[k] = !tog[k];
-        this.classList.toggle('on', tog[k]);
-      });
-    });
 
     // ── Location ──
     var locBtn  = document.getElementById('loc-btn');
     var locHelp = document.getElementById('loc-help');
     locBtn.addEventListener('click', function() {
       if (userLat) return;
+      haptic(10);
       locBtn.textContent = '⏳ Getting location…';
+      locBtn.setAttribute('aria-label', 'Getting your location');
       locHelp.style.display = 'none';
-      if (!navigator.geolocation) { locBtn.textContent = '⚠️ Not supported'; locBtn.classList.add('deny'); return; }
+      if (!navigator.geolocation) {
+        locBtn.textContent = '⚠️ Not supported';
+        locBtn.classList.add('deny');
+        return;
+      }
       navigator.geolocation.getCurrentPosition(
         function(pos) {
           userLat = pos.coords.latitude; userLng = pos.coords.longitude;
-          locBtn.textContent = '✅ Location detected'; locBtn.classList.add('ok');
+          locBtn.textContent = '✅ Location detected';
+          locBtn.setAttribute('aria-label', 'Location detected. Click to update.');
+          locBtn.classList.add('ok');
+          showToast('✅ Location detected');
+          announce('Location detected successfully');
         },
         function() {
-          locBtn.textContent = '⚠️ Location blocked — tap to retry';
+          locBtn.textContent = '⚠️ Blocked — tap to retry';
+          locBtn.setAttribute('aria-label', 'Location blocked. Tap to retry.');
           locBtn.classList.add('deny'); userLat = null;
           locHelp.style.display = 'block';
           locHelp.innerHTML = '<strong style="color:#e4d9c8">To allow location on iPhone:</strong><br>Open <strong>Settings</strong> → scroll to <strong>Safari</strong> → tap <strong>Location</strong> → choose <strong>Allow</strong>. Then tap the button again.';
+          showToast('⚠️ Location blocked', 'error');
         },
         { timeout: 10000, enableHighAccuracy: true }
       );
     });
 
-    // ── Views ──
-    function showView(n) {
-      document.getElementById('form').style.display    = n === 'form'    ? 'block' : 'none';
-      document.getElementById('loading').style.display = n === 'loading' ? 'block' : 'none';
-      document.getElementById('results').style.display = n === 'results' ? 'block' : 'none';
-    }
-    showView('form');
-    document.getElementById('back-btn').addEventListener('click', function() { showView('form'); });
-
     // ── Install banner ──
-    var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    if (isIOS && !window.navigator.standalone && !localStorage.getItem('hs-dismissed')) {
+    if (/iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone && !localStorage.getItem('hs-dismissed')) {
       document.getElementById('hs-banner').classList.add('show');
     }
     document.getElementById('hs-close').addEventListener('click', function() {
@@ -384,201 +730,179 @@ select option { background: #182e1e; color: #e4d9c8; }
     });
 
     // ── Errors ──
-    function showError(m) { var el = document.getElementById('err-box'); el.textContent = '⚠ ' + m; el.style.display = 'block'; }
-    function clearError() { document.getElementById('err-box').style.display = 'none'; }
+    function showError(m) { var el=document.getElementById('err-box'); el.textContent='⚠ '+m; el.style.display='block'; showToast('⚠ '+m,'error'); announce('Error: '+m); }
+    function clearError() { document.getElementById('err-box').style.display='none'; }
 
     // ── Helpers ──
-    function diffClass(d) { return ({Easy:'b-easy',Moderate:'b-mod',Hard:'b-hard',Strenuous:'b-str'}[d]||'b-easy'); }
-    function suitClass(s) { return ({Excellent:'s-exc',Good:'s-good',Fair:'s-fair',Poor:'s-poor'}[s]||'s-good'); }
-    function busyClass(l) { return ({Quiet:'quiet',Moderate:'mod',Busy:'busy','Very Busy':'vbusy'}[l]||'mod'); }
-    function fmtDur(h)    { return h == 1 ? '1 hr' : h + ' hrs'; }
-    function suitScore(s) { return ({Excellent:4,Good:3,Fair:2,Poor:1}[s]||0); }
+    function diffClass(d) { return({Easy:'b-easy',Moderate:'b-mod',Hard:'b-hard',Strenuous:'b-str'}[d]||'b-easy'); }
+    function suitClass(s) { return({Excellent:'s-exc',Good:'s-good',Fair:'s-fair',Poor:'s-poor'}[s]||'s-good'); }
+    function busyClass(l) { return({Quiet:'quiet',Moderate:'mod',Busy:'busy','Very Busy':'vbusy'}[l]||'mod'); }
+    function fmtDur(h)    { return h==1?'1 hr':h+' hrs'; }
+    function suitScore(s) { return({Excellent:4,Good:3,Fair:2,Poor:1}[s]||0); }
     function fmtDateLabel(d) {
-      var now = new Date(); var diff = Math.round((d - now) / 86400000);
-      if (diff === 0) return 'Today';
-      if (diff === 1) return 'Tomorrow';
-      return dayNames[d.getDay()] + ' ' + d.getDate() + ' ' + monthNames[d.getMonth()];
+      var now=new Date(), diff=Math.round((d-now)/86400000);
+      if(diff===0)return'Today'; if(diff===1)return'Tomorrow';
+      return dayNames[d.getDay()]+' '+d.getDate()+' '+monthNames[d.getMonth()];
     }
 
     // ── Search ──
     document.getElementById('search-btn').addEventListener('click', async function() {
+      haptic(25);
       clearError();
-      var travelKm   = document.getElementById('travelKm').value;
-      var minDurHrs  = document.getElementById('minDurHrs').value;
-      var maxDurHrs  = document.getElementById('maxDurHrs').value;
-      var minDistKm  = document.getElementById('minDistKm').value;
-      var maxDistKm  = document.getElementById('maxDistKm').value;
+      var travelKm  = document.getElementById('travelKm').value;
+      var minDurHrs = document.getElementById('minDurHrs').value;
+      var maxDurHrs = document.getElementById('maxDurHrs').value;
+      var minDistKm = document.getElementById('minDistKm').value;
+      var maxDistKm = document.getElementById('maxDistKm').value;
       var difficulty = document.getElementById('difficulty').value;
       var elevation  = document.getElementById('elevation').value;
-
-      var locStr = userLat
-        ? 'latitude ' + userLat.toFixed(5) + ', longitude ' + userLng.toFixed(5) + ', Ireland'
-        : 'Ireland (no specific location — suggest trails from varied counties)';
-
+      var locStr = userLat ? 'latitude '+userLat.toFixed(5)+', longitude '+userLng.toFixed(5)+', Ireland' : 'Ireland (no specific location)';
       var facList = [];
-      if (tog.carPark) facList.push('car park');
-      if (tog.toilet)  facList.push('public toilet');
-      if (tog.food)    facList.push('food nearby (pub or cafe)');
-      if (tog.child)   facList.push('child friendly (safe paths, manageable terrain for young children)');
-
+      if(tog.carPark) facList.push('car park');
+      if(tog.toilet)  facList.push('public toilet');
+      if(tog.food)    facList.push('food nearby');
+      if(tog.child)   facList.push('child friendly (safe paths, manageable terrain)');
       var elevLabel = ({low:'Low under 300m',medium:'Medium 300-600m',high:'High 600m+'}[elevation]||'No preference');
-      var diffLabel = difficulty === 'any' ? 'No preference' : difficulty;
-
       var hikingDate = selectedDate || new Date();
       var dateLabel  = fmtDateLabel(hikingDate);
-      var dateStr    = hikingDate.toLocaleDateString('en-IE', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-      var isToday    = dateLabel === 'Today';
+      var dateStr    = hikingDate.toLocaleDateString('en-IE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+      var isToday    = dateLabel==='Today';
       var weatherInstruction = isToday
-        ? 'Search the web for CURRENT weather conditions at the hiking location right now.'
-        : 'Search the web for a weather FORECAST for ' + dateStr + ' at the hiking location. Use forecast data for that specific date.';
+        ? 'Search for CURRENT weather at the hiking location right now.'
+        : 'Search for a weather FORECAST for '+dateStr+' at the hiking location.';
 
       var prompt = 'Find me 3 hiking trail recommendations in Ireland.\n'
-        + 'My location: ' + locStr + '\n'
-        + 'Hiking date: ' + dateStr + '\n'
-        + 'Max travel: ' + travelKm + ' km\n'
-        + 'Hike duration: ' + minDurHrs + '-' + maxDurHrs + ' hours\n'
-        + 'Hike distance: ' + minDistKm + '-' + maxDistKm + ' km\n'
-        + 'Elevation: ' + elevLabel + '\n'
-        + 'Difficulty: ' + diffLabel + '\n'
-        + 'Required: ' + (facList.length ? facList.join(', ') : 'none') + '\n\n'
-        + weatherInstruction + '\n'
-        + 'Then find 3 specific real existing Irish trails matching the criteria.\n'
-        + 'Sort the hikes in your response by weather_suitability: Excellent first, then Good, Fair, Poor.\n'
-        + 'Return ONLY valid JSON, no markdown, no backticks:\n'
-        + '{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string","is_forecast":' + (!isToday) + '},'
-        + '"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,'
-        + '"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string",'
-        + '"highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},'
-        + '"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string",'
-        + '"photo_query":"short scenic landscape description e.g. kerry ireland mountains lake mist",'
-        + '"child_friendly":false,"child_friendly_notes":"string",'
-        + '"busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"string","best_time_to_visit":"string"},'
-        + '"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}';
+        +'My location: '+locStr+'\nHiking date: '+dateStr+'\nMax travel: '+travelKm+' km\n'
+        +'Hike duration: '+minDurHrs+'-'+maxDurHrs+' hours\nHike distance: '+minDistKm+'-'+maxDistKm+' km\n'
+        +'Elevation: '+elevLabel+'\nDifficulty: '+(difficulty==='any'?'No preference':difficulty)+'\n'
+        +'Required: '+(facList.length?facList.join(', '):'none')+'\n\n'
+        +weatherInstruction+'\nFind 3 specific real existing Irish trails.\n'
+        +'Sort hikes by weather_suitability: Excellent first.\n'
+        +'Return ONLY valid JSON no markdown no backticks:\n'
+        +'{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string","is_forecast":'+(!isToday)+'},'
+        +'"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,'
+        +'"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string",'
+        +'"highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},'
+        +'"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string",'
+        +'"photo_query":"scenic keywords e.g. kerry ireland mountains lake mist",'
+        +'"child_friendly":false,"child_friendly_notes":"string",'
+        +'"busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"string","best_time_to_visit":"string"},'
+        +'"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}';
 
       showView('loading');
+      announce('Searching for trails. Please wait.');
+
       try {
         var res = await fetch('/api/hikes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method:'POST', headers:{'Content-Type':'application/json'},
           body: JSON.stringify({
-            model: 'claude-sonnet-4-6',
-            max_tokens: 4000,
-            tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-            system: 'You are an expert Irish hiking guide. Always fetch weather data from the web for the requested date before recommending hikes. Only recommend real existing trails. Sort results by weather_suitability descending. Respond ONLY with valid JSON, no markdown, no backticks, no preamble.',
-            messages: [{ role: 'user', content: prompt }]
+            model:'claude-sonnet-4-6', max_tokens:4000,
+            tools:[{type:'web_search_20250305',name:'web_search'}],
+            system:'You are an expert Irish hiking guide. Always fetch weather from the web for the requested date. Only recommend real existing trails. Sort results by weather_suitability descending. Respond ONLY with valid JSON no markdown no backticks no preamble.',
+            messages:[{role:'user',content:prompt}]
           })
         });
         var data = await res.json();
         if (data.error) throw new Error(data.error.message);
-        var raw = (data.content || []).filter(function(b) { return b.type === 'text'; }).map(function(b) { return b.text; }).join('');
-        var clean = raw.replace(/```json\n?|```\n?/g, '').trim();
+        var raw = (data.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('');
+        var clean = raw.replace(/```json\n?|```\n?/g,'').trim();
         var parsed;
-        try { parsed = JSON.parse(clean); }
-        catch(e) { var m = clean.match(/\{[\s\S]*\}/); if (!m) throw new Error('Could not read recommendations. Please try again.'); parsed = JSON.parse(m[0]); }
+        try { parsed=JSON.parse(clean); }
+        catch(e) { var m=clean.match(/\{[\s\S]*\}/); if(!m) throw new Error('Could not read recommendations. Please try again.'); parsed=JSON.parse(m[0]); }
         renderResults(parsed, dateLabel);
         showView('results');
+        announce('Found ' + (parsed.hikes||[]).length + ' trail recommendations, sorted by suitability.');
+        showToast('🏔 ' + (parsed.hikes||[]).length + ' trails found');
       } catch(e) {
         showView('form');
-        showError(e.message || 'Something went wrong. Please try again.');
+        showError(e.message||'Something went wrong. Please try again.');
       }
     });
 
-    // ── Render ──
+    // ── Render results ──
     function renderResults(data, dateLabel) {
-      var w = data.weather || {};
-      var hikes = (data.hikes || []).slice().sort(function(a,b) { return suitScore(b.weather_suitability) - suitScore(a.weather_suitability); });
+      var w = data.weather||{};
+      var hikes = (data.hikes||[]).slice().sort(function(a,b){return suitScore(b.weather_suitability)-suitScore(a.weather_suitability);});
       hikeStore = hikes;
       var html = '';
 
-      // Weather panel
       if (w.temperature_c !== undefined) {
-        var forecastLabel = w.is_forecast ? 'Forecast for ' + dateLabel : dateLabel + ' — Live weather';
-        html += '<div class="weather mb175">'
-          + '<div class="weather-temp">' + w.temperature_c + '°</div>'
-          + '<div>'
-          + '<p class="weather-date">' + forecastLabel + '</p>'
-          + '<p class="weather-cond">' + (w.conditions||'') + ' · ' + (w.location_name||'') + '</p>'
-          + '<p class="weather-adv">' + (w.hiking_advisory||'') + '</p>'
-          + '</div></div>';
+        var forecastLabel = w.is_forecast ? 'Forecast for '+dateLabel : dateLabel+' — Live weather';
+        html += '<div class="weather mb175" role="region" aria-label="Weather information">'
+          +'<div class="weather-temp" aria-hidden="true">'+w.temperature_c+'°</div>'
+          +'<div><p class="weather-date">'+forecastLabel+'</p>'
+          +'<p class="weather-cond">'+(w.conditions||'')+' · '+(w.location_name||'')+'</p>'
+          +'<p class="weather-adv">'+(w.hiking_advisory||'')+'</p>'
+          +'<p class="sr-only">Temperature: '+w.temperature_c+' degrees. '+(w.conditions||'')+'. '+(w.hiking_advisory||'')+'</p>'
+          +'</div></div>';
       }
 
-      html += '<p class="sec-lbl mb1">' + hikes.length + ' trails — sorted by suitability</p>';
+      html += '<p class="sec-lbl mb1" aria-live="polite">'+hikes.length+' trails — sorted by suitability</p>';
 
       hikes.forEach(function(h, idx) {
-        // Photo
-        var pq = encodeURIComponent((h.photo_query || 'ireland mountains hiking trail') + ' ireland');
-        var photoUrl = 'https://loremflickr.com/800/400/' + encodeURIComponent(h.photo_query || 'ireland,hiking,mountains').replace(/ /g,',');
-        var photoHtml = '<img class="hcard-photo" src="' + photoUrl + '" alt="' + h.name + '" loading="lazy" onerror="this.style.display=\'none\'">';
+        var photoUrl = 'https://loremflickr.com/800/400/'+encodeURIComponent((h.photo_query||'ireland,hiking,mountains').replace(/ /g,','));
+        var photoAlt = h.name + ' trail, Co. ' + h.county + ' — ' + (h.photo_query || 'Irish landscape');
+        var photoHtml = '<img class="hcard-photo" src="'+photoUrl+'" alt="'+photoAlt+'" loading="lazy" onerror="this.style.display=\'none\'">';
+        var dirUrl = (h.lat&&h.lng&&h.lat!==0)
+          ? 'https://www.google.com/maps/dir/?api=1&destination='+h.lat+','+h.lng+'&travelmode=driving'
+          : 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(h.name+' trailhead '+h.county+' Ireland')+'&travelmode=driving';
 
-        // Directions
-        var dirUrl = (h.lat && h.lng && h.lat !== 0)
-          ? 'https://www.google.com/maps/dir/?api=1&destination=' + h.lat + ',' + h.lng + '&travelmode=driving'
-          : 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(h.name + ' trailhead ' + h.county + ' Ireland') + '&travelmode=driving';
+        var diffBadge  = '<span class="badge '+diffClass(h.difficulty)+'">'+h.difficulty+'</span>';
+        var suitBadge  = '<span class="suit '+suitClass(h.weather_suitability)+'" aria-label="Weather suitability: '+h.weather_suitability+'">'+h.weather_suitability+'</span>';
+        var childBadge = h.child_friendly ? ' <span class="child-badge" aria-label="Child friendly">👶</span>' : '';
 
-        // Badges
-        var diffBadge  = '<span class="badge ' + diffClass(h.difficulty) + '">' + h.difficulty + '</span>';
-        var suitBadge  = '<span class="suit '  + suitClass(h.weather_suitability) + '">' + h.weather_suitability + '</span>';
-        var childBadge = h.child_friendly ? ' <span class="child-badge">👶</span>' : '';
+        var quickStats = '<span class="qstat">⏱ <strong>'+fmtDur(h.duration_hours)+'</strong></span>'
+          +' &nbsp;<span class="qstat">📏 <strong>'+h.distance_km+'km</strong></span>'
+          +' &nbsp;<span class="qstat">⛰ <strong>'+h.elevation_gain_m+'m</strong></span>'
+          +(h.approx_distance_from_user_km>0?' &nbsp;<span class="qstat">🚗 ~'+h.approx_distance_from_user_km+'km</span>':'');
 
-        // Quick stats
-        var distStat = h.approx_distance_from_user_km > 0 ? ' · 🚗 ~' + h.approx_distance_from_user_km + 'km' : '';
-        var quickStats = '<span class="qstat">⏱ <strong>' + fmtDur(h.duration_hours) + '</strong></span>'
-          + ' &nbsp;<span class="qstat">📏 <strong>' + h.distance_km + 'km</strong></span>'
-          + ' &nbsp;<span class="qstat">⛰ <strong>' + h.elevation_gain_m + 'm</strong></span>'
-          + (h.approx_distance_from_user_km > 0 ? ' &nbsp;<span class="qstat">🚗 ~' + h.approx_distance_from_user_km + 'km</span>' : '');
+        var facArr=[];
+        if(h.facilities&&h.facilities.car_park)    facArr.push('<span class="fac">🅿️ Car park</span>');
+        if(h.facilities&&h.facilities.toilet)      facArr.push('<span class="fac">🚻 Toilets</span>');
+        if(h.facilities&&h.facilities.nearby_food) facArr.push('<span class="fac">🍺 '+(h.facilities.food_note||'Food nearby')+'</span>');
+        var facs = facArr.length?facArr.join(''):'<span class="fac" style="color:#4a7050">No listed facilities</span>';
 
-        // Facilities
-        var facArr = [];
-        if (h.facilities && h.facilities.car_park)    facArr.push('<span class="fac">🅿️ Car park</span>');
-        if (h.facilities && h.facilities.toilet)      facArr.push('<span class="fac">🚻 Toilets</span>');
-        if (h.facilities && h.facilities.nearby_food) facArr.push('<span class="fac">🍺 ' + (h.facilities.food_note||'Food nearby') + '</span>');
-        var facs = facArr.length ? facArr.join('') : '<span class="fac" style="color:#3a5c40">No listed facilities</span>';
+        var hls = (h.highlights||[]).map(function(hl){return'<li>'+hl+'</li>';}).join('');
 
-        // Highlights
-        var hls = (h.highlights||[]).map(function(hl) { return '<li>' + hl + '</li>'; }).join('');
+        var b=h.busyness||{};
+        var bToday=b.today_prediction||'Moderate';
+        var bc=busyClass(bToday);
+        var dotCount=({Quiet:1,Moderate:2,Busy:3,'Very Busy':4}[bToday]||2);
+        var dots=[1,2,3,4].map(function(i){return'<div class="busy-dot'+(i<=dotCount?' on-'+bc:'')+'"></div>';}).join('');
+        var busyHtml='<div class="busy-bar" aria-label="Trail busyness: '+bToday+'">'
+          +'<div class="busy-row"><span class="busy-lbl">🕐 Busyness on '+dateLabel+'</span><span class="busy-val busy-'+bc+'">'+bToday+'</span></div>'
+          +'<div class="busy-dots" aria-hidden="true">'+dots+'</div>'
+          +(b.today_note?'<p class="busy-note">'+b.today_note+'</p>':'')
+          +(b.best_time_to_visit?'<p class="busy-note">💡 Best time: '+b.best_time_to_visit+'</p>':'')
+          +'</div>';
 
-        // Busyness
-        var b = h.busyness || {};
-        var bToday = b.today_prediction || 'Moderate';
-        var bc = busyClass(bToday);
-        var dotCount = ({Quiet:1,Moderate:2,Busy:3,'Very Busy':4}[bToday]||2);
-        var dots = [1,2,3,4].map(function(i) { return '<div class="busy-dot' + (i<=dotCount?' on-'+bc:'') + '"></div>'; }).join('');
-        var busyHtml = '<div class="busy-bar">'
-          + '<div class="busy-row"><span class="busy-lbl">🕐 Busyness on ' + dateLabel + '</span><span class="busy-val busy-' + bc + '">' + bToday + '</span></div>'
-          + '<div class="busy-dots">' + dots + '</div>'
-          + (b.today_note ? '<p class="busy-note">' + b.today_note + '</p>' : '')
-          + (b.best_time_to_visit ? '<p class="busy-note">💡 Best time: ' + b.best_time_to_visit + '</p>' : '')
-          + '</div>';
+        var detailId = 'detail-'+idx;
+        var linksHtml='<div class="hcard-links">'
+          +'<a class="hlink hlink-dir" href="'+dirUrl+'" target="_blank" rel="noopener" aria-label="Get driving directions to '+h.name+'">🧭 Directions</a>'
+          +(h.official_website?'<a class="hlink hlink-web" href="'+h.official_website+'" target="_blank" rel="noopener" aria-label="Official website for '+h.name+'">🔗 Website</a>':'')
+          +'<button class="hlink hlink-share" data-idx="'+idx+'" aria-label="Share '+h.name+'">📤 Share</button>'
+          +'</div>';
 
-        // Links
-        var linksHtml = '<div class="hcard-links">'
-          + '<a class="hlink hlink-dir" href="' + dirUrl + '" target="_blank" rel="noopener">🧭 Directions</a>'
-          + (h.official_website ? '<a class="hlink hlink-web" href="' + h.official_website + '" target="_blank" rel="noopener">🔗 Website</a>' : '')
-          + '<button class="hlink hlink-share" data-idx="' + idx + '">📤 Share</button>'
-          + '</div>';
+        var srSummary = h.name+', '+h.county+'. '+fmtDur(h.duration_hours)+', '+h.distance_km+' kilometres. '+h.difficulty+'. Weather suitability: '+h.weather_suitability+'.';
 
-        html += '<div class="hcard" id="hcard-' + idx + '">'
-          // ── Summary (always visible) ──
-          + '<div class="hcard-summary" onclick="toggleCard(' + idx + ')">'
-          + '<div class="hcard-summary-main">'
-          + '<div class="hcard-name">' + h.name + childBadge + '</div>'
-          + '<div class="hcard-loc">📍 ' + h.nearby_town + ', Co. ' + h.county + '</div>'
-          + '<div class="hcard-quick">' + quickStats + '</div>'
-          + '</div>'
-          + '<div class="hcard-right">' + suitBadge + diffBadge + '<span class="expand-icon">▼</span></div>'
-          + '</div>'
-          // ── Detail (hidden until expanded) ──
-          + '<div class="hcard-detail">'
-          + photoHtml
-          + '<p class="desc">' + h.description + '</p>'
-          + (hls ? '<ul class="highlights">' + hls + '</ul>' : '')
-          + '<div class="hcard-foot"><div class="facilities">' + facs + '</div></div>'
-          + (h.weather_note ? '<p class="weather-note">☁️ ' + h.weather_note + '</p>' : '')
-          + (h.why_recommended ? '<p class="why">✓ ' + h.why_recommended + '</p>' : '')
-          + busyHtml
-          + linksHtml
-          + '</div>'
-          + '</div>';
+        html += '<article class="hcard" id="hcard-'+idx+'" aria-label="'+h.name+'">'
+          +'<div class="hcard-summary" role="button" tabindex="0" aria-expanded="false" aria-controls="'+detailId+'" onclick="toggleCard('+idx+')" onkeydown="handleCardKey(event,'+idx+')">'
+          +'<div class="hcard-summary-main">'
+          +'<div class="hcard-name">'+h.name+childBadge+'</div>'
+          +'<div class="hcard-loc">📍 '+h.nearby_town+', Co. '+h.county+'</div>'
+          +'<div class="hcard-quick">'+quickStats+'</div>'
+          +'</div>'
+          +'<div class="hcard-right">'+suitBadge+diffBadge+'<span class="expand-icon" aria-hidden="true">▼</span></div>'
+          +'</div>'
+          +'<p class="sr-only">'+srSummary+'</p>'
+          +'<div class="hcard-detail" id="'+detailId+'" role="region" aria-label="Details for '+h.name+'">'
+          +photoHtml
+          +'<p class="desc">'+h.description+'</p>'
+          +(hls?'<ul class="highlights" aria-label="Trail highlights">'+hls+'</ul>':'')
+          +'<div class="hcard-foot"><div class="facilities" aria-label="Facilities">'+facs+'</div></div>'
+          +(h.weather_note?'<p class="weather-note">☁️ '+h.weather_note+'</p>':'')
+          +(h.why_recommended?'<p class="why">✓ '+h.why_recommended+'</p>':'')
+          +busyHtml+linksHtml+'</div></article>';
       });
 
       document.getElementById('results-inner').innerHTML = html;
@@ -587,25 +911,32 @@ select option { background: #182e1e; color: #e4d9c8; }
       document.querySelectorAll('.hlink-share').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
-          var idx = parseInt(this.getAttribute('data-idx'));
-          var h = hikeStore[idx];
-          if (!h) return;
-          var dirUrl = (h.lat && h.lng && h.lat !== 0)
-            ? 'https://www.google.com/maps/dir/?api=1&destination=' + h.lat + ',' + h.lng + '&travelmode=driving'
-            : 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(h.name + ' trailhead ' + h.county + ' Ireland') + '&travelmode=driving';
-          var text = h.name + ', Co. ' + h.county + '\n'
-            + h.distance_km + 'km · ' + fmtDur(h.duration_hours) + ' · ' + h.difficulty + '\n\n'
-            + h.description + '\n\nDirections: ' + dirUrl;
-          if (navigator.share) { navigator.share({ title: h.name, text: text }).catch(function(){}); }
-          else { alert('Copy to share:\n\n' + text); }
+          haptic(15);
+          var idx=parseInt(this.getAttribute('data-idx'));
+          var h=hikeStore[idx]; if(!h) return;
+          var dirUrl=(h.lat&&h.lng&&h.lat!==0)?'https://www.google.com/maps/dir/?api=1&destination='+h.lat+','+h.lng+'&travelmode=driving':'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(h.name+' trailhead '+h.county+' Ireland')+'&travelmode=driving';
+          var text=h.name+', Co. '+h.county+'\n'+h.distance_km+'km · '+fmtDur(h.duration_hours)+' · '+h.difficulty+'\n\n'+h.description+'\n\nDirections: '+dirUrl;
+          if(navigator.share){
+            navigator.share({title:h.name,text:text})
+              .then(function(){showToast('📤 Shared!');})
+              .catch(function(){});
+          } else {
+            alert('Copy to share:\n\n'+text);
+          }
         });
       });
     }
 
-    // ── Toggle card expand ──
+    // ── Toggle card ──
     function toggleCard(idx) {
-      var card = document.getElementById('hcard-' + idx);
-      card.classList.toggle('open');
+      var card    = document.getElementById('hcard-'+idx);
+      var summary = card.querySelector('.hcard-summary');
+      var isOpen  = card.classList.toggle('open');
+      haptic(8);
+      summary.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    function handleCardKey(e, idx) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCard(idx); }
     }
   </script>
 

@@ -546,48 +546,59 @@
 
     // ── Search ──
     document.getElementById('search-btn').addEventListener('click', async function() {
-      haptic(25);
+      try { haptic(25); } catch(e) {}
       clearError();
 
-      var travelKm   = document.getElementById('travelKm').value;
-      var minDurHrs  = document.getElementById('minDurHrs').value;
-      var maxDurHrs  = document.getElementById('maxDurHrs').value;
-      var minDistKm  = document.getElementById('minDistKm').value;
-      var maxDistKm  = document.getElementById('maxDistKm').value;
-      var difficulty = document.getElementById('difficulty').value;
-      var elevation  = document.getElementById('elevation').value;
-      var locStr = userLat ? 'latitude '+userLat.toFixed(5)+', longitude '+userLng.toFixed(5)+', Ireland' : 'Ireland (no specific location)';
-      var facList = [];
-      if (tog.carPark) facList.push('car park');
-      if (tog.toilet)  facList.push('public toilet');
-      if (tog.food)    facList.push('food nearby');
-      if (tog.child)   facList.push('child friendly (safe paths, manageable terrain)');
-      var elevLabel = ({low:'Low under 300m',medium:'Medium 300-600m',high:'High 600m+'}[elevation]||'No preference');
-      var hikingDate = selectedDate || new Date();
-      var dateLabel  = fmtDateShort(hikingDate);
-      var dateStr    = fmtDateFull(hikingDate);
-      var isToday    = dateLabel === 'Today';
-      var weatherInstruction = isToday
-        ? 'Search for CURRENT weather at the hiking location right now.'
-        : 'Search for a weather FORECAST for ' + dateStr + ' at the hiking location.';
+      var travelKm, minDurHrs, maxDurHrs, minDistKm, maxDistKm, difficulty, elevation;
+      var locStr, facList, elevLabel, hikingDate, dateLabel, dateStr, isToday, weatherInstruction, prompt;
 
-      var prompt = 'Find me 3 hiking trail recommendations in Ireland.\n'
-        + 'My location: ' + locStr + '\nHiking date: ' + dateStr + '\nMax travel: ' + travelKm + ' km\n'
-        + 'Hike duration: ' + minDurHrs + '-' + maxDurHrs + ' hours\nHike distance: ' + minDistKm + '-' + maxDistKm + ' km\n'
-        + 'Elevation: ' + elevLabel + '\nDifficulty: ' + (difficulty==='any'?'No preference':difficulty) + '\n'
-        + 'Required: ' + (facList.length ? facList.join(', ') : 'none') + '\n\n'
-        + weatherInstruction + '\nFind 3 specific real existing Irish trails.\n'
-        + 'Sort hikes by weather_suitability: Excellent first.\n'
-        + 'Return ONLY valid JSON no markdown no backticks:\n'
-        + '{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string","is_forecast":' + (!isToday) + '},'
-        + '"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,'
-        + '"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string",'
-        + '"highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},'
-        + '"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string",'
-        + '"photo_query":"scenic keywords e.g. kerry ireland mountains lake mist",'
-        + '"child_friendly":false,"child_friendly_notes":"string",'
-        + '"busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"string","best_time_to_visit":"string"},'
-        + '"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}';
+      try {
+        travelKm   = document.getElementById('travelKm').value;
+        minDurHrs  = document.getElementById('minDurHrs').value;
+        maxDurHrs  = document.getElementById('maxDurHrs').value;
+        minDistKm  = document.getElementById('minDistKm').value;
+        maxDistKm  = document.getElementById('maxDistKm').value;
+        difficulty = document.getElementById('difficulty').value;
+        elevation  = document.getElementById('elevation').value;
+      } catch(e) { showError('Form read error: ' + e.message); return; }
+
+      try {
+        locStr = userLat ? 'latitude ' + userLat.toFixed(5) + ', longitude ' + userLng.toFixed(5) + ', Ireland' : 'Ireland (no specific location)';
+        facList = [];
+        if (tog.carPark) facList.push('car park');
+        if (tog.toilet)  facList.push('public toilet');
+        if (tog.food)    facList.push('food nearby');
+        if (tog.child)   facList.push('child friendly');
+        elevLabel = ({low:'Low under 300m',medium:'Medium 300-600m',high:'High 600m+'}[elevation]||'No preference');
+        hikingDate = selectedDate || new Date();
+        dateLabel  = fmtDateShort(hikingDate);
+        dateStr    = fmtDateFull(hikingDate);
+        isToday    = dateLabel === 'Today';
+      } catch(e) { showError('Date/location error: ' + e.message); return; }
+
+      try {
+        weatherInstruction = isToday
+          ? 'Search for CURRENT weather at the hiking location right now.'
+          : 'Search for a weather FORECAST for ' + dateStr + ' at the hiking location.';
+
+        prompt = 'Find me 3 hiking trail recommendations in Ireland.\n'
+          + 'My location: ' + locStr + '\nHiking date: ' + dateStr + '\nMax travel: ' + travelKm + ' km\n'
+          + 'Hike duration: ' + minDurHrs + '-' + maxDurHrs + ' hours\nHike distance: ' + minDistKm + '-' + maxDistKm + ' km\n'
+          + 'Elevation: ' + elevLabel + '\nDifficulty: ' + (difficulty==='any'?'No preference':difficulty) + '\n'
+          + 'Required: ' + (facList.length ? facList.join(', ') : 'none') + '\n\n'
+          + weatherInstruction + '\nFind 3 specific real existing Irish trails.\n'
+          + 'Sort hikes by weather_suitability: Excellent first.\n'
+          + 'Return ONLY valid JSON no markdown no backticks:\n'
+          + '{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string","is_forecast":' + (!isToday) + '},'
+          + '"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,'
+          + '"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string",'
+          + '"highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},'
+          + '"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string",'
+          + '"photo_query":"scenic keywords e.g. kerry ireland mountains lake mist",'
+          + '"child_friendly":false,"child_friendly_notes":"string",'
+          + '"busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"string","best_time_to_visit":"string"},'
+          + '"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}';
+      } catch(e) { showError('Prompt build error: ' + e.message); return; }
 
       showView('loading');
       announce('Searching for trails. Please wait.');

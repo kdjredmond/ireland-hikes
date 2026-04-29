@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/hikes.js": {
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
     { "source": "/api/hikes", "destination": "/api/hikes" },
     { "source": "/(.*)", "destination": "/index.html" }

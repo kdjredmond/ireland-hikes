@@ -739,7 +739,11 @@ select option { background: #182e1e; color: #e4d9c8; }
     function busyClass(l) { return({Quiet:'quiet',Moderate:'mod',Busy:'busy','Very Busy':'vbusy'}[l]||'mod'); }
     function fmtDur(h)    { return h==1?'1 hr':h+' hrs'; }
     function suitScore(s) { return({Excellent:4,Good:3,Fair:2,Poor:1}[s]||0); }
-    function fmtDateLabel(d) {
+    function fmtDateFull(d) {
+      var fullDayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      var fullMonthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      return fullDayNames[d.getDay()] + ', ' + d.getDate() + ' ' + fullMonthNames[d.getMonth()] + ' ' + d.getFullYear();
+    }
       var now=new Date(), diff=Math.round((d-now)/86400000);
       if(diff===0)return'Today'; if(diff===1)return'Tomorrow';
       return dayNames[d.getDay()]+' '+d.getDate()+' '+monthNames[d.getMonth()];
@@ -765,7 +769,7 @@ select option { background: #182e1e; color: #e4d9c8; }
       var elevLabel = ({low:'Low under 300m',medium:'Medium 300-600m',high:'High 600m+'}[elevation]||'No preference');
       var hikingDate = selectedDate || new Date();
       var dateLabel  = fmtDateLabel(hikingDate);
-      var dateStr    = hikingDate.toLocaleDateString('en-IE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+      var dateStr    = fmtDateFull(hikingDate);
       var isToday    = dateLabel==='Today';
       var weatherInstruction = isToday
         ? 'Search for CURRENT weather at the hiking location right now.'

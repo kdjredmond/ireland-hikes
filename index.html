@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Cosán" />
-  <title>Cosán — Ireland Trail Finder</title>
+  <title>Cosán v4 — Ireland Trail Finder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -636,7 +636,7 @@
 
       } catch(e) {
         showView('form');
-        showError(e.message || 'Something went wrong. Please try again.');
+        showError((e.name ? e.name + ': ' : '') + (e.message || 'Something went wrong. Please try again.'));
       }
     });
 

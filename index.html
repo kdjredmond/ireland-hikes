@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Cosán" />
-  <title>Cosán v5 — Ireland Trail Finder</title>
+  <title>Cosán v6 — Ireland Trail Finder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -664,7 +664,6 @@
       html += '<p class="sec-lbl mb1">' + hikes.length + ' trails — sorted by suitability</p>';
 
       hikes.forEach(function(h, idx) {
-        var photoUrl = 'https://loremflickr.com/800/400/' + encodeURIComponent((h.photo_query||'ireland,hiking,mountains').replace(/ /g,','));
         var dirUrl = (h.lat && h.lng && h.lat !== 0)
           ? 'https://www.google.com/maps/dir/?api=1&destination=' + h.lat + ',' + h.lng + '&travelmode=driving'
           : 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(h.name + ' trailhead ' + h.county + ' Ireland') + '&travelmode=driving';
@@ -710,7 +709,6 @@
           + '<div class="hcard-quick">' + quickStats + '</div></div>'
           + '<div class="hcard-right">' + suitBadge + diffBadge + '<span class="expand-icon" aria-hidden="true">▼</span></div></div>'
           + '<div class="hcard-detail" id="detail-' + idx + '">'
-          + '<img class="hcard-photo" src="' + photoUrl + '" alt="' + h.name + ' trail, Co. ' + h.county + '" loading="lazy" onerror="this.style.display=\'none\'">'
           + '<p class="desc">' + h.description + '</p>'
           + (hls ? '<ul class="highlights">' + hls + '</ul>' : '')
           + '<div class="hcard-foot"><div class="facilities">' + facs + '</div></div>'

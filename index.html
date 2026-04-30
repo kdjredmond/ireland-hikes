@@ -581,22 +581,22 @@
           ? 'Based on the time of year and typical Irish weather for this season, estimate likely weather conditions.'
           : 'Based on the season and typical Irish weather patterns for ' + dateStr + ', estimate likely weather conditions.';
 
-        prompt = 'Find me 3 hiking trail recommendations in Ireland.\n'
-          + 'My location: ' + locStr + '\nHiking date: ' + dateStr + '\nMax travel: ' + travelKm + ' km\n'
-          + 'Hike duration: ' + minDurHrs + '-' + maxDurHrs + ' hours\nHike distance: ' + minDistKm + '-' + maxDistKm + ' km\n'
-          + 'Elevation: ' + elevLabel + '\nDifficulty: ' + (difficulty==='any'?'No preference':difficulty) + '\n'
-          + 'Required: ' + (facList.length ? facList.join(', ') : 'none') + '\n\n'
-          + weatherInstruction + '\nFind 3 specific real existing Irish trails.\n'
-          + 'Sort hikes by weather_suitability: Excellent first.\n'
-          + 'Return ONLY valid JSON no markdown no backticks:\n'
-          + '{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string","is_forecast":' + (!isToday) + '},'
-          + '"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,"elevation_gain_m":0,'
-          + '"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point","description":"string",'
-          + '"highlights":["s","s","s"],"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},'
-          + '"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"full URL or empty string",'
-          + '"photo_query":"scenic keywords e.g. kerry ireland mountains lake mist",'
-          + '"child_friendly":false,"child_friendly_notes":"string",'
-          + '"busyness":{"general_level":"Quiet|Moderate|Busy|Very Busy","today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"string","best_time_to_visit":"string"},'
+        prompt = 'Ireland hiking recommendations.\n'
+          + 'Location: ' + locStr + '\n'
+          + 'Date: ' + dateStr + '\n'
+          + 'Max travel: ' + travelKm + 'km, Duration: ' + minDurHrs + '-' + maxDurHrs + 'hrs\n'
+          + 'Distance: ' + minDistKm + '-' + maxDistKm + 'km, Elevation: ' + elevLabel + '\n'
+          + 'Difficulty: ' + (difficulty==='any'?'any':difficulty) + '\n'
+          + 'Need: ' + (facList.length ? facList.join(', ') : 'none') + '\n\n'
+          + 'Reply ONLY with this JSON, no extra text:\n'
+          + '{"weather":{"location_name":"string","temperature_c":0,"conditions":"string","hiking_advisory":"string"},'
+          + '"hikes":[{"name":"string","county":"string","nearby_town":"string","distance_km":0,"duration_hours":0,'
+          + '"elevation_gain_m":0,"difficulty":"Easy|Moderate|Hard|Strenuous","trail_type":"Loop|Out & Back|Point to Point",'
+          + '"description":"string","highlights":["string","string","string"],'
+          + '"facilities":{"car_park":false,"toilet":false,"nearby_food":false,"food_note":"string"},'
+          + '"approx_distance_from_user_km":0,"lat":0.0,"lng":0.0,"official_website":"string",'
+          + '"child_friendly":false,'
+          + '"busyness":{"today_prediction":"Quiet|Moderate|Busy|Very Busy","today_note":"string","best_time_to_visit":"string"},'
           + '"weather_suitability":"Excellent|Good|Fair|Poor","weather_note":"string","why_recommended":"string"}]}';
       } catch(e) { showError('Prompt build error: ' + e.message); return; }
 
@@ -609,8 +609,8 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             model: 'claude-sonnet-4-6',
-            max_tokens: 4000,
-            system: 'You are an expert Irish hiking guide with encyclopedic knowledge of trails across all 32 counties. Based on the season and date provided, give a realistic weather estimate for Ireland. Only recommend real existing trails. Sort results by weather_suitability descending. Respond ONLY with valid JSON no markdown no backticks no preamble.',
+            max_tokens: 2000,
+            system: 'Expert Irish hiking guide. Recommend 3 real trails. Give realistic seasonal weather estimate. Reply ONLY with the exact JSON requested, no other text.',
             messages: [{ role: 'user', content: prompt }]
           })
         });

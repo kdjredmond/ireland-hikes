@@ -9,16 +9,22 @@ return res.status(405).json({ error: { message: ‘Method not allowed’ } });
 }
 
 try {
-// Vercel may not auto-parse — handle both string and object
-let body = req.body;
-if (typeof body === ‘string’) {
-body = JSON.parse(body);
-}
-if (!body || typeof body !== ‘object’) {
-return res.status(400).json({ error: { message: ‘Missing or invalid body’ } });
-}
+// Manually read raw body from stream — Vercel does not auto-parse
+const rawBody = await new Promise((resolve, reject) => {
+let data = ‘’;
+req.on(‘data’, chunk => { data += chunk.toString(); });
+req.on(‘end’, () => resolve(data));
+req.on(‘error’, reject);
+});
 
 ```
+let body;
+try {
+  body = JSON.parse(rawBody);
+} catch (e) {
+  return res.status(400).json({ error: { message: 'Invalid JSON: ' + e.message } });
+}
+
 const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
   method: 'POST',
   headers: {
@@ -42,7 +48,7 @@ try {
   data = JSON.parse(text);
 } catch (e) {
   return res.status(500).json({
-    error: { message: 'API returned non-JSON (' + apiRes.status + '): ' + text.slice(0, 200) }
+    error: { message: 'API non-JSON (' + apiRes.status + '): ' + text.slice(0, 200) }
   });
 }
 
@@ -51,7 +57,7 @@ return res.status(apiRes.status).json(data);
 
 } catch (err) {
 return res.status(500).json({
-error: { message: ’Function error: ’ + (err.message || String(err)) }
+error: { message: ’Error: ’ + (err.message || String(err)) }
 });
 }
 }

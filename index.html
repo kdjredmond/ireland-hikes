@@ -577,9 +577,9 @@
       } catch(e) { showError('Date/location error: ' + e.message); return; }
 
       try {
-        weatherInstruction = isToday
-          ? 'Search for CURRENT weather at the hiking location right now.'
-          : 'Search for a weather FORECAST for ' + dateStr + ' at the hiking location.';
+        var weatherInstruction = isToday
+          ? 'Based on the time of year and typical Irish weather for this season, estimate likely weather conditions.'
+          : 'Based on the season and typical Irish weather patterns for ' + dateStr + ', estimate likely weather conditions.';
 
         prompt = 'Find me 3 hiking trail recommendations in Ireland.\n'
           + 'My location: ' + locStr + '\nHiking date: ' + dateStr + '\nMax travel: ' + travelKm + ' km\n'
@@ -610,8 +610,7 @@
           body: JSON.stringify({
             model: 'claude-sonnet-4-6',
             max_tokens: 4000,
-            tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-            system: 'You are an expert Irish hiking guide. Always fetch weather from the web for the requested date. Only recommend real existing trails. Sort results by weather_suitability descending. Respond ONLY with valid JSON no markdown no backticks no preamble.',
+            system: 'You are an expert Irish hiking guide with encyclopedic knowledge of trails across all 32 counties. Based on the season and date provided, give a realistic weather estimate for Ireland. Only recommend real existing trails. Sort results by weather_suitability descending. Respond ONLY with valid JSON no markdown no backticks no preamble.',
             messages: [{ role: 'user', content: prompt }]
           })
         });
@@ -654,7 +653,7 @@
       var html = '';
 
       if (w.temperature_c !== undefined) {
-        var forecastLabel = w.is_forecast ? 'Forecast for ' + dateLabel : dateLabel + ' — Live weather';
+        var forecastLabel = w.is_forecast ? 'Estimated forecast for ' + dateLabel : 'Typical conditions · ' + dateLabel;
         html += '<div class="weather mb175"><div class="weather-temp">' + w.temperature_c + '°</div>'
           + '<div><p class="weather-date">' + forecastLabel + '</p>'
           + '<p class="weather-cond">' + (w.conditions||'') + ' · ' + (w.location_name||'') + '</p>'
